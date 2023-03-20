@@ -3,7 +3,7 @@ use near_sdk::collections::{LazyOption, LookupMap};
 use near_sdk::json_types::U128;
 use near_sdk::{env, near_bindgen, AccountId, Balance, PanicOnDefault, StorageUsage};
 
-pub mod core;
+pub mod ft_core;
 pub mod events;
 pub mod metadata;
 pub mod storage;
