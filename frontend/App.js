@@ -1,23 +1,26 @@
 import "regenerator-runtime/runtime";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Header from "./src/components/Header/Header";
 import AssetRegister from "./src/components/Pages/AssetRegister";
 import MyPage from "./src/components/Pages/MyPage";
 import STMarket from "./src/components/Pages/STMarket";
+import GlobalStyle from "./src/GlobalStyle";
 
-import "./assets/global.css";
-
-export default function App({ isSignedIn, contractId, wallet }) {
+export default function App({ isSignedIn, wallet }) {
   return (
-    <>
-      <Header isSignedIn={isSignedIn} contractId={contractId} wallet={wallet} />
+    <React.StrictMode>
+      <GlobalStyle />
+      <Header isSignedIn={isSignedIn} wallet={wallet} />
       <Routes>
-        <Route path="/" element={<AssetRegister />} />
+        <Route
+          path="/"
+          element={<AssetRegister isSignedIn={isSignedIn} wallet={wallet} />}
+        />
         <Route path="/stMarket" element={<STMarket />} />
         <Route path="/MyPage" element={<MyPage />} />
       </Routes>
-    </>
+    </React.StrictMode>
   );
 }

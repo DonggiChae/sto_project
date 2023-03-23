@@ -19,10 +19,10 @@ const Container = styled.div`
 const HeaderWrapper = styled.div`
   width: 1500px;
   height: 70px;
-  padding: 20px 0px 20px 80px;
+  padding: 20px 80px 20px 80px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
 const LogoWrapper = styled.div`
@@ -31,6 +31,8 @@ const LogoWrapper = styled.div`
   align-items: center;
   width: 55px;
   height: 55px;
+  font-size: 1.5rem;
+  font-weight: 800;
 `;
 const Logo = styled.img`
   width: 100%;
@@ -64,12 +66,12 @@ const NavContainer = styled.div`
 `;
 
 const NameWrapper = styled.div`
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 700;
   cursor: pointer;
 `;
 
-export default function Header({ isSignedIn, contractId, wallet }) {
+export default function Header({ isSignedIn, wallet }) {
   return (
     <Container>
       <HeaderWrapper>
@@ -79,10 +81,10 @@ export default function Header({ isSignedIn, contractId, wallet }) {
             <NameWrapper>AssetRegister</NameWrapper>
           </StyledLink>
           <StyledLink to="/STMarket">
-            <NameWrapper>AssetRegister</NameWrapper>
+            <NameWrapper>STMarket</NameWrapper>
           </StyledLink>
           <StyledLink to="/MyPage">
-            <NameWrapper>AssetRegister</NameWrapper>
+            <NameWrapper>MYPage</NameWrapper>
           </StyledLink>
         </NavContainer>
         <Authorize isSignedIn={isSignedIn} wallet={wallet} />

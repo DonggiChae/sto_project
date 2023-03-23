@@ -14,7 +14,9 @@
     "crypto-browserify": "^3.12.0",
     "env-cmd": "^10.1.0",
     "nodemon": "^2.0.20",
+    "os-browserify": "^0.3.0",
     "parcel": "^2.8.3",
+    "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "react-test-renderer": "^18.2.0",
     "stream-browserify": "^3.0.0",
@@ -33,12 +35,14 @@
     "@near-wallet-selector/nightly-connect": "^7.8.0",
     "@near-wallet-selector/sender": "^7.8.0",
     "@near-wallet-selector/wallet-connect": "^7.8.0",
+    "dotenv": "^16.0.3",
     "near-api-js": "^1.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
     "regenerator-runtime": "^0.13.11",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.9",
+    "styled-reset": "^4.4.5"
   },
   "resolutions": {
     "@babel/preset-env": "7.13.8"
