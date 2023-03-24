@@ -94,7 +94,7 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
                 token_id: token_id.clone(), //the actual token ID
                 sale_conditions, //the sale conditions 
                 ft_token_amounts: ft_amounts,
-           },
+            },
         );
 
         //Extra functionality that populates collections necessary for the view calls 

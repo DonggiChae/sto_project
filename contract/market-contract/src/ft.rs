@@ -43,6 +43,7 @@ impl Contract {
 
     /// 토큰 판매
     /// 토큰 이름과 얼마나(금액) 판매할 지 입력
+    
     #[payable]
     pub fn sell_token(&mut self, token_id: AccountId, price: Balance) {
         assert_one_yocto();
