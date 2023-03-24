@@ -41,6 +41,7 @@ pub enum StorageKey {
     Metadata
 }
 
+
 #[near_bindgen]
 impl Contract {
     /// Initializes the contract with the given total supply owned by the given `owner_id` with

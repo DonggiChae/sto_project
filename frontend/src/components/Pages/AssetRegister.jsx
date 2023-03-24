@@ -72,7 +72,7 @@ export default function AssetRegister({ wallet }) {
         account_id: NFT_MARKET_CONTRACT_NAME,
         msg: { sale_conditions: NFTPrice },
         receiver_id: account,
-        ft_amounts: NFTFTAmounts, 
+        ft_amounts: NFTFTAmounts,
       },
       deposit: "100000000000000000000000",
     });

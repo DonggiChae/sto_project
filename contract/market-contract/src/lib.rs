@@ -20,8 +20,8 @@ mod internal;
 mod nft_callbacks;
 mod sale;
 mod sale_views;
-mod ft_lib;
 mod ft;
+
 
 //GAS constants to attach to calls
 const GAS_FOR_RESOLVE_PURCHASE: Gas = Gas(115_000_000_000_000);
@@ -114,13 +114,15 @@ impl Contract {
         that's passed in
     */
     #[init]
-    pub fn new(owner_id: AccountId) -> Self {
+    pub fn new(owner_id: AccountId, ft_id: AccountId) -> Self {
     // pub fn new(owner_id: AccountId) -> Self {
         let this = Self {
             //set the owner_id field equal to the passed in owner_id. 
             owner_id,
-            // //set the FT ID equal to the passed in ft_id.
-            // ft_id,
+
+            //set the FT ID equal to the passed in ft_id.
+            ft_id,
+
             //Storage keys are simply the prefixes used for the collections. This helps avoid data collision
             sales: UnorderedMap::new(StorageKey::Sales),
             by_owner_id: LookupMap::new(StorageKey::ByOwnerId),
@@ -215,55 +217,55 @@ impl Contract {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-//     use near_sdk::testing_env;
-//     use near_sdk::test_utils::VMContextBuilder;
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use near_sdk::testing_env;
+    use near_sdk::test_utils::VMContextBuilder;
 
-//     const NEAR: u128 = 1_000_000_000_000_000_000_000_000;
+    const NEAR: u128 = 1_000_000_000_000_000_000_000_000;
 
-//     #[test]
-//     fn ft_tx() {
-//         let owner_id: AccountId = "owner".parse().unwrap();
-//         let token_id: AccountId = "tk1".parse().unwrap();
-//         let price: Balance = 1_000_000_000_000_000_000_000;
+    #[test]
+    fn ft_tx() {
+        let owner_id: AccountId = "owner".parse().unwrap();
+        let token_id: AccountId = "tk1".parse().unwrap();
+        let price: Balance = 1_000_000_000_000_000_000_000;
 
-//         let mut contract = Contract::new(owner_id, token_id);
+        let mut contract = Contract::new(owner_id, token_id);
 
-//         // check buy
-//         set_context("buyer_a", 2 * NEAR);
-//         contract.buy_token(token_id, 100 * price);
-//         let ft_balance = contract.ft_balance_of("buyer_a".parse().unwrap());
+        // check buy
+        set_context("buyer_a", 2 * NEAR);
+        contract.buy_token(token_id, 100 * price);
+        let ft_balance = contract.ft_balance_of("buyer_a".parse().unwrap());
 
-//         assert_eq!(ft_balance.0, 100 * price);
+        assert_eq!(ft_balance.0, 100 * price);
 
-//         set_context("buyer_b", 1 * NEAR);
-//         contract.buy_token(token_id, 300 * price);
-//         let ft_balance = contract.ft_balance_of("buyer_b".parse().unwrap());
+        set_context("buyer_b", 1 * NEAR);
+        contract.buy_token(token_id, 300 * price);
+        let ft_balance = contract.ft_balance_of("buyer_b".parse().unwrap());
 
-//         assert_eq!(ft_balance.0, 300 * price);
+        assert_eq!(ft_balance.0, 300 * price);
 
-//         assert_panic!(contract.buy_token(token_id, 1 * NEAR));
+        assert_panic!(contract.buy_token(token_id, 1 * NEAR));
 
-//         // check sell
-//         set_context("buyer_a", 50 * price);
-//         contract.sell_token(token_id, 50 * price);
-//         let ft_balance = contract.ft_balance_of("buyer_a".parse().unwrap());
+        // check sell
+        set_context("buyer_a", 50 * price);
+        contract.sell_token(token_id, 50 * price);
+        let ft_balance = contract.ft_balance_of("buyer_a".parse().unwrap());
 
-//         assert_eq!(ft_balance.0, 50 * price);
-//         let amout = env::attached_deposit();
-//         assert_eq!(amount, 100 * price);
+        assert_eq!(ft_balance.0, 50 * price);
+        let amout = env::attached_deposit();
+        assert_eq!(amount, 100 * price);
 
-//         assert_panic!(contract.sell_token(token_id, 100 * price));
-//     }
+        assert_panic!(contract.sell_token(token_id, 100 * price));
+    }
 
-//     // Auxiliar fn: create a mock context
-//     fn set_context(predecessor: &str, amount: Balance) {
-//         let mut builder = VMContextBuilder::new();
-//         builder.predecessor_account_id(predecessor.parse().unwrap());
-//         builder.attached_deposit(amount);
+    // Auxiliar fn: create a mock context
+    fn set_context(predecessor: &str, amount: Balance) {
+        let mut builder = VMContextBuilder::new();
+        builder.predecessor_account_id(predecessor.parse().unwrap());
+        builder.attached_deposit(amount);
 
-//         testing_env!(builder.build());
-//     }
-// }
+        testing_env!(builder.build());
+    }
+}

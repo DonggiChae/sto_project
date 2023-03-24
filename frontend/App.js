@@ -18,8 +18,14 @@ export default function App({ isSignedIn, wallet }) {
           path="/"
           element={<AssetRegister isSignedIn={isSignedIn} wallet={wallet} />}
         />
-        <Route path="/stMarket" element={<STMarket />} />
-        <Route path="/MyPage" element={<MyPage />} />
+        <Route
+          path="/stMarket"
+          element={<STMarket isSignedIn={isSignedIn} wallet={wallet} />}
+        />
+        <Route
+          path="/MyPage"
+          element={<MyPage isSignedIn={isSignedIn} wallet={wallet} />}
+        />
       </Routes>
     </React.StrictMode>
   );
