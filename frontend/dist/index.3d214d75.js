@@ -2969,7 +2969,7 @@ window.onload = async ()=>{
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-dom/client":"lOjBx","./App":"2Ew96","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./src/near-wallet":"jjApJ","react":"21dqq"}],"iTorj":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-dom/client":"lOjBx","./App":"2Ew96","react-router-dom":"9xmpe","./src/near-wallet":"jjApJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iTorj":[function(require,module,exports) {
 "use strict";
 module.exports = require("c18decde01aceaf8");
 
@@ -27246,7 +27246,7 @@ $RefreshReg$(_c, "App");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","regenerator-runtime/runtime":"dXNgZ","react":"21dqq","react-router-dom":"9xmpe","./src/components/Header/Header":"hTZHl","./src/components/Pages/AssetRegister":"kZiYz","./src/components/Pages/MyPage":"tJXuI","./src/components/Pages/STMarket":"aE7S3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./src/GlobalStyle":"jarQ6"}],"dXNgZ":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","regenerator-runtime/runtime":"dXNgZ","react":"21dqq","react-router-dom":"9xmpe","./src/components/Header/Header":"hTZHl","./src/components/Pages/AssetRegister":"kZiYz","./src/components/Pages/MyPage":"tJXuI","./src/components/Pages/STMarket":"aE7S3","./src/GlobalStyle":"jarQ6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"dXNgZ":[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -35140,7 +35140,7 @@ $RefreshReg$(_c2, "Authorize");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","styled-components":"1U3k6"}],"km3Ru":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","styled-components":"1U3k6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"km3Ru":[function(require,module,exports) {
 "use strict";
 var Refresh = require("4b176dbe1c3298c1");
 function debounce(func, delay) {
@@ -35463,7 +35463,7 @@ $RefreshReg$(_c3, "AssetRegister");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","styled-components":"1U3k6","dotenv":"lErsX","../Input":"f6G1q","regenerator-runtime":"dXNgZ","../Button":"2jcdY"}],"lErsX":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","styled-components":"1U3k6","dotenv":"lErsX","../Input":"f6G1q","../Button":"2jcdY","regenerator-runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"lErsX":[function(require,module,exports) {
 var process = require("c8486808ee76eea7");
 const fs = require("2307833ecabf8092");
 const path = require("39b319e2e59c208b");
@@ -65223,8 +65223,8 @@ var _core = require("@near-wallet-selector/core");
 var _hwTransportWebhid = require("@ledgerhq/hw-transport-webhid");
 var _hwTransportWebhidDefault = parcelHelpers.interopDefault(_hwTransportWebhid);
 var _nearApiJs = require("near-api-js");
-var Buffer = require("666e97fff48c4cc9").Buffer;
 var global = arguments[3];
+var Buffer = require("666e97fff48c4cc9").Buffer;
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
 
