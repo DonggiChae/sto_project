@@ -8,6 +8,7 @@ import { async } from "regenerator-runtime";
 
 dotenv.config();
 const NFT_CONTRACT_NAME = process.env.NFT_CONTRACT_NAME;
+const NFT_MARKET_CONTRACT_NAME = process.env.NFT_MARKET_CONTRACT_NAME;
 
 const THIRTY_TGAS = "30000000000000";
 const NO_DEPOSIT = "0";
@@ -29,24 +30,9 @@ export default function AssetRegister({ wallet }) {
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState("");
   const [account, setAccount] = useState("");
-  let mintNFT = {
-    receiverId: NFT_CONTRACT_NAME,
-    actions: [
-      {
-        type: "nft_mint",
-        params: {
-          methodName: "add_message",
-          args: {
-            token_id: tokenId,
-            metadata: { title: title, description: description },
-            receiver_id: account,
-          },
-          gas: THIRTY_TGAS,
-          deposit: NO_DEPOSIT,
-        },
-      },
-    ],
-  };
+  const [NFTTokenId, setNFTTokenId] = useState("");
+  const [NFTPrice, setNFTPrice] = useState("100000000000000000000000");
+  const [NFTFTAmounts, setNFTFTAmounts] = useState("100000000000000000000000");
 
   const handleTokenIdChange = (e) => {
     setTokenId(e.target.value);
@@ -64,9 +50,37 @@ export default function AssetRegister({ wallet }) {
     setMedia(e.target.value);
   };
 
-  const handleMint = (e) => {
+  const storageDeposit = () => {
+    wallet.callMethod({
+      contractId: NFT_MARKET_CONTRACT_NAME,
+      method: "storage_deposit",
+      args: {
+        account_id: account,
+      },
+      deposit: "100000000000000000000000",
+    });
+  };
+
+  const handleNFTApprove = (e) => {
     e.preventDefault();
     console.log(NFT_CONTRACT_NAME);
+    wallet.callMethod({
+      contractId: NFT_CONTRACT_NAME,
+      method: "nft_mint",
+      args: {
+        token_id: tokenId,
+        account_id: NFT_MARKET_CONTRACT_NAME,
+        msg: { sale_conditions: NFTPrice },
+        receiver_id: account,
+        ft_amounts: NFTFTAmounts, 
+      },
+      deposit: "100000000000000000000000",
+    });
+    e.target.reset();
+  };
+
+  const handleMint = (e) => {
+    e.preventDefault();
     wallet.callMethod({
       contractId: NFT_CONTRACT_NAME,
       method: "nft_mint",
