@@ -7,10 +7,10 @@ use crate::*;
 trait ExtNftContract {
     fn nft_transfer(
         &mut self,
-        receiver_id: AccountId, // purchaser (person to transfer the NFT to)
-        token_id: TokenId, // token ID to transfer
+        receiver_id: AccountId,   // purchaser (person to transfer the NFT to)
+        token_id: TokenId,        // token ID to transfer
         approval_id: Option<u64>, // market contract's approval ID in order to transfer the token on behalf of the owner
-        memo: Option<String>, //memo (to include some context)
+        memo: Option<String>,     //memo (to include some context)
     );
 }
 
@@ -20,8 +20,8 @@ trait ExtNftContract {
 // trait ExtFtContract {
 //     fn ft_transfer(
 //         &mut self,
-//         receiver_id: AccountId, 
-//         amount: U128, 
+//         receiver_id: AccountId,
+//         amount: U128,
 //         memo: Option<String>
 //     );
 // }

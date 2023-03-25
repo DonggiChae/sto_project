@@ -2,72 +2,77 @@ use crate::*;
 
 #[near_bindgen]
 impl Contract {
-
     /// 토큰 구매
-    /// 토큰 이름과 얼마나(금액) 구매할 지 입력
+    /// 토큰 이름과 얼마나 구매할 지 입력
     #[payable]
-    pub fn buy_token(&mut self, token_id: AccountId, price: Balance) {
+    pub fn buy_token(&mut self, token_id: String, ft_amounts: u64) {
         assert_one_yocto();
 
         let token_id: String = token_id.into();
-        assert_eq!(self.ft_id, token_id, "Must be the same token");
+        assert!(self.ft_infos.contains_key(&token_id), "Must have the token");
+        let price_per_ft: Balance = self.ft_infos.get(&token_id).unwrap().into();
 
         let buyer_id = env::predecessor_account_id();
         let deposit = env::attached_deposit();
 
-        assert!(deposit >= price, "Attached deposit must be greater than or equal to the current price: {:?}", price);
-        let price: Balance = price.into();
+        let ft_amounts: u128 = ft_amounts.into();
+
+        let value = price_per_ft * ft_amounts;
+
+        assert!(
+            deposit >= value,
+            "Attached deposit must be greater than or equal to the current price: {:?}",
+            value
+        );
 
         // 구매자가 가지고 있는 FT 읽고 구매할 만큼 추가
-        let cur_bal = self.ft_deposits.get(&buyer_id).unwrap_or(0);
-        self.ft_deposits.insert(&buyer_id, &(cur_bal + price));
+        let mut ft_map = self
+            .ft_deposits
+            .get(&token_id)
+            .unwrap_or_else(|| UnorderedMap::new(b'a'));
+        let mut cur_bal: Balance = ft_map.get(&buyer_id).unwrap_or(0);
+        cur_bal += value;
+        ft_map.insert(&buyer_id, &cur_bal);
 
-        if price > 0 {
-            // Perform the cross contract call to transfer the FTs to the seller
-            ext_ft_contract::ext(self.ft_id.clone())
-                // Attach 1 yoctoNEAR with static GAS equal to the GAS for nft transfer. Also attach an unused GAS weight of 1 by default.
-                .with_attached_deposit(1)
-                .ft_transfer(
-                    self.owner_id, //seller to transfer the FTs to
-                    U128(price), //amount to transfer
-                    Some("Token sold".to_string()), //memo (to include some context)
-                );
-
-        // If the promise was not successful, we won't transfer any FTs and instead refund the buyer
-        } else {
-            // Get the buyer's current balance and increment it
-            let cur_bal = self.ft_deposits.get(&buyer_id).unwrap();
-            self.ft_deposits.insert(&buyer_id, &(cur_bal - price));
-        }
+        self.ft_deposits.insert(&token_id, &ft_map);
     }
 
     /// 토큰 판매
-    /// 토큰 이름과 얼마나(금액) 판매할 지 입력
+    /// 토큰 이름과 얼마나 판매할 지 입력
     #[payable]
-    pub fn sell_token(&mut self, token_id: AccountId, price: Balance) {
+    pub fn sell_token(&mut self, token_id: AccountId, ft_amounts: u64) {
         assert_one_yocto();
 
         let token_id: String = token_id.into();
-        assert_eq!(self.ft_id, token_id, "Must be the same token");
+        assert!(self.ft_infos.contains_key(&token_id), "Must have the token");
+        let price_per_ft: Balance = self.ft_infos.get(&token_id).unwrap().into();
 
         let seller_id = env::predecessor_account_id();
-        let price: Balance = price.into();
+        let deposit = env::attached_deposit();
 
-        // 판매자가 가지고 있는 FT 읽고 판매할 만큼 제거
-        let cur_bal = self.ft_deposits.get(&seller_id).expect("No token");
+        let ft_amounts: u128 = ft_amounts.into();
 
-        assert!(cur_bal >= price, "Current balance must be greater than or equal to the current price: {:?}", price);
-        self.ft_deposits.insert(&seller_id, &(cur_bal - price));
+        let value = price_per_ft * ft_amounts;
 
-        if price > 0 {
-            // Perform the cross contract call to transfer the FTs to the seller
-            Promise::new(seller_id).transfer(price);
+        // 판매자가 가지고 있는 FT 읽고 판매할 만큼 감소
+        let mut ft_map = self.ft_deposits.get(&token_id).unwrap();
+        let mut cur_bal: Balance = ft_map.get(&seller_id).unwrap_or(0);
+        assert!(
+            cur_bal >= value,
+            "Not enough tokens to sell"
+        );
 
-        // If the promise was not successful, we won't transfer any FTs and instead refund the buyer
+        cur_bal -= value;
+        if cur_bal == 0 {
+            ft_map.remove(&seller_id);
+            if ft_map.is_empty() {
+                self.ft_deposits.remove(&token_id);
+            }
         } else {
-            // Get the buyer's current balance and increment it
-            let cur_bal = self.ft_deposits.get(&buyer_id).unwrap();
-            self.ft_deposits.insert(&buyer_id, &(cur_bal + price));
+            ft_map.insert(&seller_id, &cur_bal);
+            self.ft_deposits.insert(&token_id, &ft_map);
         }
+
+        Promise::new(seller_id).transfer(ft_amounts * price_per_ft);
     }
 }

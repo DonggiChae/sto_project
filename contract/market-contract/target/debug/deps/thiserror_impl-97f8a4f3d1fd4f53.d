@@ -1,0 +1,12 @@
+D:\Near\sto_project\contract\market-contract\target\debug\deps\thiserror_impl-97f8a4f3d1fd4f53.dll: C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\lib.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\ast.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\attr.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\expand.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\fmt.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\generics.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\prop.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\valid.rs
+
+D:\Near\sto_project\contract\market-contract\target\debug\deps\thiserror_impl-97f8a4f3d1fd4f53.d: C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\lib.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\ast.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\attr.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\expand.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\fmt.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\generics.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\prop.rs C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\valid.rs
+
+C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\lib.rs:
+C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\ast.rs:
+C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\attr.rs:
+C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\expand.rs:
+C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\fmt.rs:
+C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\generics.rs:
+C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\prop.rs:
+C:\Users\rcd21\.cargo\registry\src\github.com-1ecc6299db9ec823\thiserror-impl-1.0.32\src\valid.rs:

@@ -35296,7 +35296,7 @@ var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _regeneratorRuntime = require("regenerator-runtime");
 var _s = $RefreshSig$();
 (0, _dotenvDefault.default).config();
-const NFT_CONTRACT_NAME = "dev-1679562071325-57884867055578";
+const NFT_CONTRACT_NAME = undefined;
 const THIRTY_TGAS = "30000000000000";
 const NO_DEPOSIT = "0";
 const Container = (0, _styledComponentsDefault.default).div`
