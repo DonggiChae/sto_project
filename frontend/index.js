@@ -3,7 +3,6 @@ import React from "react";
 import { createRoot, useState, useEffect } from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-
 // NEAR
 import { Wallet } from "./src/near-wallet";
 

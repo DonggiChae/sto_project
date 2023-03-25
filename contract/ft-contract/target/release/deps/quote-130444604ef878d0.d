@@ -1,0 +1,13 @@
+/Users/seon/sto_project/contract/ft-contract/target/release/deps/quote-130444604ef878d0.rmeta: /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/lib.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/ext.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/format.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/ident_fragment.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/to_tokens.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/runtime.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/spanned.rs
+
+/Users/seon/sto_project/contract/ft-contract/target/release/deps/libquote-130444604ef878d0.rlib: /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/lib.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/ext.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/format.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/ident_fragment.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/to_tokens.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/runtime.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/spanned.rs
+
+/Users/seon/sto_project/contract/ft-contract/target/release/deps/quote-130444604ef878d0.d: /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/lib.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/ext.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/format.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/ident_fragment.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/to_tokens.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/runtime.rs /Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/spanned.rs
+
+/Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/lib.rs:
+/Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/ext.rs:
+/Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/format.rs:
+/Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/ident_fragment.rs:
+/Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/to_tokens.rs:
+/Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/runtime.rs:
+/Users/seon/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.10/src/spanned.rs:
