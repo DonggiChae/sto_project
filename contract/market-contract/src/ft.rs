@@ -15,6 +15,8 @@ impl Contract {
         let buyer_id = env::predecessor_account_id();
         let deposit = env::attached_deposit();
 
+        assert!(self.whitelist.contains(&buyer_id), "Customers must enroll in the whitelist");
+
         let ft_amounts: u128 = ft_amounts.into();
 
         let value = price_per_ft * ft_amounts;
@@ -49,6 +51,7 @@ impl Contract {
 
         let seller_id = env::predecessor_account_id();
         let deposit = env::attached_deposit();
+        assert!(self.whitelist.contains(&seller_id), "Customers must enroll in the whitelist");
 
         let ft_amounts: u128 = ft_amounts.into();
 
