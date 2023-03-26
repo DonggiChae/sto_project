@@ -188,10 +188,10 @@ impl Contract {
         let len = sales.map(|s| s.len()).unwrap_or_default();
         //how much NEAR is being used up for all the current sales on the account
         let diff = u128::from(len) * STORAGE_PER_SALE;
-
+        
         //the excess to withdraw is the total storage paid - storage being used up.
         amount -= diff;
-
+        
         //if that excess to withdraw is > 0, we transfer the amount to the user.
         if amount > 0 {
             Promise::new(owner_id.clone()).transfer(amount);
@@ -204,6 +204,12 @@ impl Contract {
         }
     }
 
+    // 화이트리스트에 추가
+    pub fn make_it_white(&mut self, account_id: AccountId) {
+        assert_one_yocto();
+        self.whitelist.insert(&account_id);
+    }
+    
     /// views
     //return the minimum storage for 1 sale
     pub fn storage_minimum_balance(&self) -> U128 {
