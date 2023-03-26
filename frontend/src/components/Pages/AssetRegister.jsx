@@ -18,10 +18,21 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 120px;
-  background-color: grey;
+  height: 100vh;
+  width: 100vw;
+  margin-top: 160px;
+  background-color: Black;
+  color: white;
 `;
-const NFTFormWrapper = styled.div``;
+
+const NFTFormWrapper = styled.div`
+  border: 0.3rem solid white;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem;
+  width: 300px;
+`;
+
 const NFTForm = styled.form``;
 
 export default function AssetRegister({ wallet }) {
@@ -31,7 +42,7 @@ export default function AssetRegister({ wallet }) {
   const [media, setMedia] = useState("");
   const [account, setAccount] = useState("");
   const [NFTTokenId, setNFTTokenId] = useState("");
-  const [NFTPrice, setNFTPrice] = useState("100000000000000000000000");
+  const [NFTFTPrice, setNFTFTPrice] = useState("100000000000000000000000");
   const [NFTFTAmounts, setNFTFTAmounts] = useState("100000000000000000000000");
 
   const handleTokenIdChange = (e) => {
@@ -50,6 +61,18 @@ export default function AssetRegister({ wallet }) {
     setMedia(e.target.value);
   };
 
+  const handleNFTTokenIdChange = (e) => {
+    setNFTTokenId(e.target.value);
+  };
+
+  const handleNFTPriceChange = (e) => {
+    setNFTFTPrice(e.target.value);
+  };
+
+  const handleFTAmountsChange = (e) => {
+    setNFTFTAmounts(e.target.value);
+  };
+
   const storageDeposit = () => {
     wallet.callMethod({
       contractId: NFT_MARKET_CONTRACT_NAME,
@@ -59,24 +82,6 @@ export default function AssetRegister({ wallet }) {
       },
       deposit: "100000000000000000000000",
     });
-  };
-
-  const handleNFTApprove = (e) => {
-    e.preventDefault();
-    console.log(NFT_CONTRACT_NAME);
-    wallet.callMethod({
-      contractId: NFT_CONTRACT_NAME,
-      method: "nft_mint",
-      args: {
-        token_id: tokenId,
-        account_id: NFT_MARKET_CONTRACT_NAME,
-        msg: { sale_conditions: NFTPrice },
-        receiver_id: account,
-        ft_amounts: NFTFTAmounts,
-      },
-      deposit: "100000000000000000000000",
-    });
-    e.target.reset();
   };
 
   const handleMint = (e) => {
@@ -93,6 +98,26 @@ export default function AssetRegister({ wallet }) {
     });
     e.target.reset();
   };
+
+  const handleNFTApprove = (e) => {
+    e.preventDefault();
+    console.log(NFT_CONTRACT_NAME);
+    wallet.callMethod({
+      contractId: NFT_CONTRACT_NAME,
+      method: "nft_approve",
+      args: {
+        token_id: NFTTokenId,
+        account_id: NFT_MARKET_CONTRACT_NAME,
+        msg: { sale_conditions: NFTPrice },
+        receiver_id: account,
+        ft_amounts: NFTFTAmounts,
+        ft_price: NFTFTPrice,
+      },
+      deposit: "100000000000000000000000",
+    });
+    e.target.reset();
+  };
+
   useEffect(() => {
     setAccount(wallet.accountId);
   }, []);
@@ -128,6 +153,36 @@ export default function AssetRegister({ wallet }) {
             required
           />
           <Button type="submit" title="mint" />
+        </NFTForm>
+      </NFTFormWrapper>
+      <NFTFormWrapper>
+        StoreDeposit 0.1NEAR for Asset Sale
+        <NFTForm onSubmit={storageDeposit}>
+          <Button type="submit" title="deposit" />
+        </NFTForm>
+      </NFTFormWrapper>
+      <NFTFormWrapper>
+        Asset Sale
+        <NFTForm onSubmit={handleNFTApprove}>
+          <Input
+            name="TokenID"
+            onChange={handleNFTTokenIdChange}
+            placeholder="TokenID"
+            required
+          />
+          <Input
+            name="FTAmounts"
+            onChange={handleFTAmountsChange}
+            placeholder="FTAmounts"
+            required
+          />
+          <Input
+            name="Price"
+            onChange={handleNFTPriceChange}
+            placeholder="Price"
+            required
+          />
+          <Button type="submit" title="approve" />
         </NFTForm>
       </NFTFormWrapper>
     </Container>
