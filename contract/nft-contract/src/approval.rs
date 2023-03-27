@@ -30,6 +30,7 @@ trait NonFungibleTokenApprovalsReceiver {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
+        ft_price: Balance,
     );
 }
 
@@ -38,7 +39,7 @@ impl NonFungibleTokenCore for Contract {
 
     //allow a specific account ID to approve a token on your behalf
     #[payable]
-    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, msg: Option<String>, ft_amounts: u64) {
+    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, msg: Option<String>, ft_amounts: u64, ft_price: Balance) {
         /*
             assert at least one yocto for security reasons - this will cause a redirect to the NEAR wallet.
             The user needs to attach enough to pay for storage on the contract
@@ -92,7 +93,8 @@ impl NonFungibleTokenCore for Contract {
                     token.owner_id, 
                     approval_id, 
                     msg,
-                    ft_amounts
+                    ft_amounts,
+                    ft_price
                 ).as_return();
         }
     }
