@@ -136,6 +136,6 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         self.by_nft_contract_id
             .insert(&nft_contract_id, &by_nft_contract_id);
         
-        self.ft_infos.insert(token_id.into(), ft_price);
+        self.ft_infos.insert(&token_id, &ft_price);
     }
 }
