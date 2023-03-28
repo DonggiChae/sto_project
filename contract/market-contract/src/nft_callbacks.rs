@@ -23,11 +23,7 @@ trait NonFungibleTokenApprovalsReceiver {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
-<<<<<<< HEAD
-        ft_price: u64,
-=======
         ft_price: Balance,
->>>>>>> 1a317a215f83c01fcfc9a7119a82329e91f1b611
     );
 }
 
@@ -43,11 +39,7 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
-<<<<<<< HEAD
-        ft_price: u64,
-=======
         ft_price: Balance
->>>>>>> 1a317a215f83c01fcfc9a7119a82329e91f1b611
     ) {
         // get the contract ID which is the predecessor
         let nft_contract_id = env::predecessor_account_id();
@@ -83,10 +75,10 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         );
 
         //if all these checks pass we can create the sale conditions object.
-        let SaleArgs { sale_conditions } =
-            //the sale conditions come from the msg field. The market assumes that the user passed
-            //in a proper msg. If they didn't, it panics. 
-            near_sdk::serde_json::from_str(&msg).expect("Not valid SaleArgs");
+        // let SaleArgs { sale_conditions } =
+        //     //the sale conditions come from the msg field. The market assumes that the user passed
+        //     //in a proper msg. If they didn't, it panics. 
+        //     near_sdk::serde_json::from_str(&msg).expect("Not valid SaleArgs");
 
         //create the unique sale ID which is the contract + DELIMITER + token ID
         let contract_and_token_id = format!("{}{}{}", nft_contract_id, DELIMETER, token_id);
@@ -99,7 +91,7 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
                 approval_id, //approval ID for that token that was given to the market
                 nft_contract_id: nft_contract_id.to_string(), //NFT contract the token was minted on
                 token_id: token_id.clone(), //the actual token ID
-                sale_conditions, //the sale conditions
+                msg, //the sale conditions
                 ft_token_amounts: ft_amounts,
             },
         );
