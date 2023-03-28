@@ -1,4 +1,5 @@
 /* A helper file that simplifies using the wallet selector */
+import { Buffer } from "buffer";
 
 // near api js
 import { providers } from "near-api-js";
