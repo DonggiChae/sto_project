@@ -3,7 +3,7 @@ use near_sdk::{ext_contract};
 
 pub trait NonFungibleTokenCore {
     //approve an account ID to transfer a token on your behalf
-    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, msg: Option<String>, ft_amounts: u64);
+    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, msg: Option<String>, ft_amounts: u64, ft_price: Balance);
 
     //check if the passed in account has access to approve the token ID
 	fn nft_is_approved(
@@ -30,11 +30,7 @@ trait NonFungibleTokenApprovalsReceiver {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
-<<<<<<< HEAD
-        ft_price: u64,
-=======
         ft_price: Balance,
->>>>>>> 1a317a215f83c01fcfc9a7119a82329e91f1b611
     );
 }
 
@@ -43,11 +39,7 @@ impl NonFungibleTokenCore for Contract {
 
     //allow a specific account ID to approve a token on your behalf
     #[payable]
-<<<<<<< HEAD
-    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, msg: Option<String>, ft_amounts: u64, ft_price: u64) {
-=======
     fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, msg: Option<String>, ft_amounts: u64, ft_price: Balance) {
->>>>>>> 1a317a215f83c01fcfc9a7119a82329e91f1b611
         /*
             assert at least one yocto for security reasons - this will cause a redirect to the NEAR wallet.
             The user needs to attach enough to pay for storage on the contract
@@ -102,11 +94,7 @@ impl NonFungibleTokenCore for Contract {
                     approval_id, 
                     msg,
                     ft_amounts,
-<<<<<<< HEAD
-                    ft_price,
-=======
                     ft_price
->>>>>>> 1a317a215f83c01fcfc9a7119a82329e91f1b611
                 ).as_return();
         }
     }

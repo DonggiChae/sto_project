@@ -118,3 +118,7 @@ near login
 near dev-deploy out/market.wasm -f && export MARKETPLACE_CONTRACT=$(cat neardev/dev-account)
 
 near call $MARKETPLACE_CONTRACT new '{"owner_id": "'$MARKETPLACE_CONTRACT'"}' --accountId $MARKETPLACE_CONTRACT
+
+# NFT_APPROVE
+
+near call $NFT_CONTRACT nft_approve '{"token_id": "market-token", "account_id": "'$MARKETPLACE_CONTRACT'", "msg": "{\"sale_conditions\":\"10000000000000000000000000\"}"}' --accountId $SELLER_ID --amount 0.1
