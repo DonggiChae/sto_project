@@ -23,6 +23,7 @@ trait NonFungibleTokenApprovalsReceiver {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
+        ft_price: u64,
     );
 }
 
@@ -30,7 +31,7 @@ trait NonFungibleTokenApprovalsReceiver {
 #[near_bindgen]
 impl NonFungibleTokenApprovalsReceiver for Contract {
     /// where we add the sale because we know nft owner can only call nft_approve
-
+    /// TODO 처음 등록할때 희망가 작성
     fn nft_on_approve(
         &mut self,
         token_id: TokenId,
@@ -38,6 +39,7 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
+        ft_price: u64,
     ) {
         // get the contract ID which is the predecessor
         let nft_contract_id = env::predecessor_account_id();

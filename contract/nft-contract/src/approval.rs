@@ -19,7 +19,7 @@ pub trait NonFungibleTokenCore {
     //revoke all accounts from transferring the token on your behalf
     fn nft_revoke_all(&mut self, token_id: TokenId);
 }
-
+// ft_price가 최초 등록할때 정한 시세
 #[ext_contract(ext_non_fungible_approval_receiver)]
 trait NonFungibleTokenApprovalsReceiver {
     //cross contract call to an external contract that is initiated during nft_approve
@@ -30,6 +30,7 @@ trait NonFungibleTokenApprovalsReceiver {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
+        ft_price: u64,
     );
 }
 
@@ -38,7 +39,7 @@ impl NonFungibleTokenCore for Contract {
 
     //allow a specific account ID to approve a token on your behalf
     #[payable]
-    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, msg: Option<String>, ft_amounts: u64) {
+    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, msg: Option<String>, ft_amounts: u64, ft_price: u64) {
         /*
             assert at least one yocto for security reasons - this will cause a redirect to the NEAR wallet.
             The user needs to attach enough to pay for storage on the contract
@@ -92,7 +93,8 @@ impl NonFungibleTokenCore for Contract {
                     token.owner_id, 
                     approval_id, 
                     msg,
-                    ft_amounts
+                    ft_amounts,
+                    ft_price,
                 ).as_return();
         }
     }

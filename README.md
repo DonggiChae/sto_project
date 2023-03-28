@@ -108,3 +108,13 @@ echo $NFT_CONTRACT
 이 명령어 입력후에 나오는 컨트랙트 주소 frontend/.env 만들어서 여기에 넣기
 
 NFT_CONTRACT_NAME="여기에"
+
+NFT Market contract 배포
+
+cd contract/market-contract && ./build.sh
+
+near login
+
+near dev-deploy out/market.wasm -f && export MARKETPLACE_CONTRACT=$(cat neardev/dev-account)
+
+near call $MARKETPLACE_CONTRACT new '{"owner_id": "'$MARKETPLACE_CONTRACT'"}' --accountId $MARKETPLACE_CONTRACT
