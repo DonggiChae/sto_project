@@ -5,7 +5,7 @@ impl Contract {
     /// 토큰 구매
     /// 토큰 이름과 얼마나 구매할 지 입력
     #[payable]
-    pub fn buy_token(&mut self, token_id: String, ft_amounts: u64) {
+    pub fn buy_token(&mut self, token_id: String, trading_amounts: u64) {
         assert_one_yocto();
 
         let token_id: String = token_id.into();
@@ -15,9 +15,11 @@ impl Contract {
         let buyer_id = env::predecessor_account_id();
         let deposit = env::attached_deposit();
 
-        let ft_amounts: u128 = ft_amounts.into();
+        assert!(self.whitelist.contains(&buyer_id), "Customers must enroll in the whitelist");
 
-        let value = price_per_ft * ft_amounts;
+        let trading_amounts: u128 = trading_amounts.into();
+
+        let value = price_per_ft * trading_amounts;
 
         assert!(
             deposit >= value,
@@ -40,7 +42,7 @@ impl Contract {
     /// 토큰 판매
     /// 토큰 이름과 얼마나 판매할 지 입력
     #[payable]
-    pub fn sell_token(&mut self, token_id: AccountId, ft_amounts: u64) {
+    pub fn sell_token(&mut self, token_id: AccountId, trading_amounts: u64) {
         assert_one_yocto();
 
         let token_id: String = token_id.into();
@@ -49,10 +51,11 @@ impl Contract {
 
         let seller_id = env::predecessor_account_id();
         let deposit = env::attached_deposit();
+        assert!(self.whitelist.contains(&seller_id), "Customers must enroll in the whitelist");
 
-        let ft_amounts: u128 = ft_amounts.into();
+        let trading_amounts: u128 = trading_amounts.into();
 
-        let value = price_per_ft * ft_amounts;
+        let value = price_per_ft * trading_amounts;
 
         // 판매자가 가지고 있는 FT 읽고 판매할 만큼 감소
         let mut ft_map = self.ft_deposits.get(&token_id).unwrap();
@@ -73,6 +76,6 @@ impl Contract {
             self.ft_deposits.insert(&token_id, &ft_map);
         }
 
-        Promise::new(seller_id).transfer(ft_amounts * price_per_ft);
+        Promise::new(seller_id).transfer(trading_amounts * price_per_ft);
     }
 }

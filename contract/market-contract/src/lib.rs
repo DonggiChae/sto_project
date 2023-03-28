@@ -87,6 +87,9 @@ pub struct Contract {
 
     // Metadata for the contract itself
     // pub metadata: LazyOption<FungibleTokenMetadata>,
+
+    // Whitelist for transactions
+    pub whitelist: UnorderedSet<AccountId>,
 }
 
 /// Helper structure to for keys of the persistent collections.
@@ -104,6 +107,7 @@ pub enum StorageKey {
     FTDeposits,
     Accounts,
     Metadata,
+    Whitelist,
 }
 
 #[near_bindgen]
@@ -129,6 +133,7 @@ impl Contract {
             by_nft_contract_id: LookupMap::new(StorageKey::ByNFTContractId),
             storage_deposits: LookupMap::new(StorageKey::StorageDeposits),
             ft_deposits: UnorderedMap::new(StorageKey::FTDeposits),
+            whitelist: UnorderedSet::new(StorageKey::Whitelist),
         };
 
         //return the Contract object
@@ -184,10 +189,10 @@ impl Contract {
         let len = sales.map(|s| s.len()).unwrap_or_default();
         //how much NEAR is being used up for all the current sales on the account
         let diff = u128::from(len) * STORAGE_PER_SALE;
-
+        
         //the excess to withdraw is the total storage paid - storage being used up.
         amount -= diff;
-
+        
         //if that excess to withdraw is > 0, we transfer the amount to the user.
         if amount > 0 {
             Promise::new(owner_id.clone()).transfer(amount);
@@ -200,6 +205,12 @@ impl Contract {
         }
     }
 
+    // 화이트리스트에 추가
+    pub fn make_it_white(&mut self, account_id: AccountId) {
+        assert_one_yocto();
+        self.whitelist.insert(&account_id);
+    }
+    
     /// views
     //return the minimum storage for 1 sale
     pub fn storage_minimum_balance(&self) -> U128 {
@@ -225,6 +236,11 @@ impl Contract {
                 .get(&account_id)
                 .unwrap_or(0),
         )
+    }
+
+    // 화이트리스트에 포함 여부 확인
+    pub fn is_white(&self, account_id: AccountId) -> bool {
+        self.whitelist.contains(&account_id)
     }
 }
 

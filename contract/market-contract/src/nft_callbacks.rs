@@ -23,7 +23,11 @@ trait NonFungibleTokenApprovalsReceiver {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
+<<<<<<< HEAD
         ft_price: u64,
+=======
+        ft_price: Balance,
+>>>>>>> 1a317a215f83c01fcfc9a7119a82329e91f1b611
     );
 }
 
@@ -39,7 +43,11 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
+<<<<<<< HEAD
         ft_price: u64,
+=======
+        ft_price: Balance
+>>>>>>> 1a317a215f83c01fcfc9a7119a82329e91f1b611
     ) {
         // get the contract ID which is the predecessor
         let nft_contract_id = env::predecessor_account_id();
@@ -135,5 +143,7 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         //insert the set back into the collection for the given nft contract ID
         self.by_nft_contract_id
             .insert(&nft_contract_id, &by_nft_contract_id);
+        
+        self.ft_infos.insert(&token_id, &ft_price);
     }
 }
