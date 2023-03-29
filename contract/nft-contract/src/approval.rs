@@ -3,7 +3,7 @@ use near_sdk::{ext_contract};
 
 pub trait NonFungibleTokenCore {
     //approve an account ID to transfer a token on your behalf
-    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, msg: Option<String>, ft_amounts: u64, ft_price: Balance);
+    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, sale_conditions: U128, ft_amounts: u64, ft_price: Balance);
 
     //check if the passed in account has access to approve the token ID
 	fn nft_is_approved(
@@ -28,7 +28,7 @@ trait NonFungibleTokenApprovalsReceiver {
         token_id: TokenId,
         owner_id: AccountId,
         approval_id: u64,
-        msg: String,
+        sale_conditions: U128,
         ft_amounts: u64,
         ft_price: Balance,
     );
@@ -39,7 +39,7 @@ impl NonFungibleTokenCore for Contract {
 
     //allow a specific account ID to approve a token on your behalf
     #[payable]
-    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, msg: Option<String>, ft_amounts: u64, ft_price: Balance) {
+    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, sale_conditions: U128, ft_amounts: u64, ft_price: Balance) {
         /*
             assert at least one yocto for security reasons - this will cause a redirect to the NEAR wallet.
             The user needs to attach enough to pay for storage on the contract
@@ -85,18 +85,28 @@ impl NonFungibleTokenCore for Contract {
 
         //if some message was passed into the function, we initiate a cross contract call on the
         //account we're giving access to. 
-        if let Some(msg) = msg {
-            // Defaulting GAS weight to 1, no attached deposit, and no static GAS to attach.
-            ext_non_fungible_approval_receiver::ext(account_id)
+        // if let Some(msg) = msg {
+        //     // Defaulting GAS weight to 1, no attached deposit, and no static GAS to attach.
+        //     ext_non_fungible_approval_receiver::ext(account_id)
+        //         .nft_on_approve(
+        //             token_id, 
+        //             token.owner_id, 
+        //             approval_id, 
+        //             Some(msg),
+        //             ft_amounts,
+        //             ft_price
+        //         ).as_return();
+        // }
+
+        ext_non_fungible_approval_receiver::ext(account_id)
                 .nft_on_approve(
                     token_id, 
                     token.owner_id, 
                     approval_id, 
-                    msg,
+                    sale_conditions,
                     ft_amounts,
                     ft_price
                 ).as_return();
-        }
     }
 
     //check if the passed in account has access to approve the token ID
