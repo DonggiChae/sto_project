@@ -26,6 +26,9 @@ impl Contract {
             "Attached deposit must be greater than or equal to the current price: {:?}",
             value
         );
+        
+        // 잔액 반환
+        Promise::new(buyer_id).transfer(deposit-value);
 
         // 구매자가 가지고 있는 FT 읽고 구매할 만큼 추가
         let mut ft_map = self
@@ -57,6 +60,8 @@ impl Contract {
 
         let value = price_per_ft * trading_amounts;
 
+        Promise::new(seller_id).transfer(value);
+        
         // 판매자가 가지고 있는 FT 읽고 판매할 만큼 감소
         let mut ft_map = self.ft_deposits.get(&token_id).unwrap();
         let mut cur_bal: Balance = ft_map.get(&seller_id).unwrap_or(0);
@@ -76,6 +81,5 @@ impl Contract {
             self.ft_deposits.insert(&token_id, &ft_map);
         }
 
-        Promise::new(seller_id).transfer(trading_amounts * price_per_ft);
     }
 }
