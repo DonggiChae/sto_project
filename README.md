@@ -80,7 +80,8 @@ On Windows, if you're seeing an error containing `EPERM` it may be related to sp
 [near-cli]: https://github.com/near/near-cli
 [gh-pages]: https://github.com/tschaub/gh-pages
 
-니어
+# 니어
+
 sto-project
 Dapp
 실행 순서
@@ -89,7 +90,7 @@ npm install
 
 cd ./frontend && npm install
 
-NFT 컨트랙트 빌드 & 배포
+## NFT 컨트랙트 빌드 & 배포
 
 cd contract/nft-contract && ./build.sh
 
@@ -109,16 +110,30 @@ echo $NFT_CONTRACT
 
 NFT_CONTRACT_NAME="여기에"
 
-NFT Market contract 배포
+## NFT Market contract 배포
 
 cd contract/market-contract && ./build.sh
 
 near login
 
-near dev-deploy out/market.wasm -f && export MARKETPLACE_CONTRACT=$(cat neardev/dev-account)
+near dev-deploy ../out/market.wasm -f && export MARKETPLACE_CONTRACT=$(cat neardev/dev-account)
 
 near call $MARKETPLACE_CONTRACT new '{"owner_id": "'$MARKETPLACE_CONTRACT'"}' --accountId $MARKETPLACE_CONTRACT
 
-# NFT_APPROVE
+## NFT_APPROVE
 
 near call $NFT_CONTRACT nft_approve '{"token_id": "market-token", "account_id": "'$MARKETPLACE_CONTRACT'", "msg": "{\"sale_conditions\":\"10000000000000000000000000\"}"}' --accountId $SELLER_ID --amount 0.1
+
+## sub account example
+
+near create-account contract.xxx.testnet --masterAccount xxx.testnet --initialBalance 5
+
+near deploy --accountId contract.xxx.testnet --wasmFile ../out/market.wasm
+
+near call markettest.donggi.test new '{"owner_id": "'markettest.donggi.test'"}' --accountId donggi.test
+
+near create-account nfttest.donggi.testnet --masterAccount donggi.testnet --initialBalance 5
+
+near deploy --accountId nfttest.donggi.testnet --wasmFile ../out/nft.wasm
+
+near call nfttest.donggi.testnet new_default_meta '{"owner_id": "nfttest.donggi.testnet"}' --accountId nfttest.donggi.testnet

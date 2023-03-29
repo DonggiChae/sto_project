@@ -7,7 +7,8 @@ use crate::*;
 #[derive(Serialize, Deserialize)]
 #[serde(crate = "near_sdk::serde")]
 pub struct SaleArgs {
-    pub sale_conditions: SalePriceInFTs,
+    // pub sale_conditions: SalePriceInFTs,
+    pub sale_conditions: U128,
 }
 
 /*
@@ -21,7 +22,8 @@ trait NonFungibleTokenApprovalsReceiver {
         token_id: TokenId,
         owner_id: AccountId,
         approval_id: u64,
-        msg: String,
+        // msg: Option<HashMap<String, U128>>,
+        sale_conditions: U128,
         ft_amounts: u64,
         ft_price: Balance,
     );
@@ -37,7 +39,8 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         token_id: TokenId,
         owner_id: AccountId,
         approval_id: u64,
-        msg: String,
+        // msg: Option<HashMap<String, U128>>,
+        sale_conditions: U128,
         ft_amounts: u64,
         ft_price: Balance
     ) {
@@ -75,11 +78,11 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         );
 
         //if all these checks pass we can create the sale conditions object.
+        // let msg_json = near_sdk::serde_json::to_string(&msg).expect("Failed to serialize msg to JSON");
         // let SaleArgs { sale_conditions } =
         //     //the sale conditions come from the msg field. The market assumes that the user passed
         //     //in a proper msg. If they didn't, it panics. 
-        //     near_sdk::serde_json::from_str(&msg).expect("Not valid SaleArgs");
-
+        //     ft_price;
         //create the unique sale ID which is the contract + DELIMITER + token ID
         let contract_and_token_id = format!("{}{}{}", nft_contract_id, DELIMETER, token_id);
 
@@ -91,7 +94,7 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
                 approval_id, //approval ID for that token that was given to the market
                 nft_contract_id: nft_contract_id.to_string(), //NFT contract the token was minted on
                 token_id: token_id.clone(), //the actual token ID
-                msg, //the sale conditions
+                sale_conditions, //the sale conditions
                 ft_token_amounts: ft_amounts,
             },
         );
