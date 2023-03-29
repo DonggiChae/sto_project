@@ -281,7 +281,7 @@ impl Contract {
 //         let ft_balance = contract.ft_balance_of("buyer_a".parse().unwrap());
 
 //         assert_eq!(ft_balance.0, 50 * price);
-//         let amout = env::attached_deposit();
+//         let amount = env::attached_deposit();
 //         assert_eq!(amount, 100 * price);
 
 //         assert_panic!(contract.sell_token(token_id, 100 * price));

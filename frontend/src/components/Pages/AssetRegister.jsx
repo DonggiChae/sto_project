@@ -105,13 +105,14 @@ export default function AssetRegister({ wallet }) {
     wallet.callMethod({
       contractId: NFT_CONTRACT_NAME,
       method: "nft_approve",
+      receiver_id: NFT_MARKET_CONTRACT_NAME,
       args: {
         token_id: NFTTokenId,
-        account_id: NFT_MARKET_CONTRACT_NAME,
-        msg: "9000000000000000000000000", //sales_condition
-        receiver_id: account,
-        ft_amounts: Number(NFTFTAmounts),
-        ft_price: NFTFTPrice,
+        account_id: account,
+        // msg: "9000000000000000000000000", //sales_condition
+        sale_conditions: parseInt(NFTFTPrice),
+        ft_amounts: parseInt(NFTFTAmounts),
+        ft_price: parseInt(NFTFTPrice),
       },
       deposit: "100000000000000000000000",
     });

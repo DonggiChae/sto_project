@@ -5,7 +5,7 @@ import { Route, Routes, Link, useParams } from "react-router-dom";
 import STBuy from "./STBuy";
 
 dotenv.config();
-const MARKET_CONTRACT_NAME = process.env.MARKET_CONTRACT_NAME;
+const NFT_MARKET_CONTRACT_NAME = process.env.NFT_MARKET_CONTRACT_NAME;
 
 const Container = styled.div`
   margin-top: 120px;
@@ -31,6 +31,9 @@ const ListingsTable = styled.table`
   tr:hover {
     background-color: #f5f5f5;
   }
+  tbody {
+    color: #ffffff;
+  }
 `;
 
 const Button = styled.button`
@@ -50,7 +53,7 @@ const Button = styled.button`
 export default function STMarket({ wallet }) {
   const handleGetSale = () => {
     wallet.viewMethod({
-      contractId: MARKET_CONTRACT_NAME,
+      contractId: NFT_MARKET_CONTRACT_NAME,
       method: "get_sale",
       args: {
         nft_contract_1d,
@@ -61,7 +64,7 @@ export default function STMarket({ wallet }) {
 
   const handleAddSale = async () => {
     await wallet.callMethod({
-      contractId: MARKET_CONTRACT_NAME,
+      contractId: NFT_MARKET_CONTRACT_NAME,
       method: "add_sale",
       args: {
         nft_contract_id,
@@ -74,7 +77,7 @@ export default function STMarket({ wallet }) {
 
   const handleDeleteSale = async () => {
     await wallet.callMethod({
-      contractId: MARKET_CONTRACT_NAME,
+      contractId: NFT_MARKET_CONTRACT_NAME,
       method: "delete_sale",
       args: {
         nft_contract_id,
@@ -86,7 +89,7 @@ export default function STMarket({ wallet }) {
 
   const handleOffer = async () => {
     await wallet.callMethod({
-      contractId: MARKET_CONTRACT_NAME,
+      contractId: NFT_MARKET_CONTRACT_NAME,
       method: "offer",
       args: {
         nft_contract_id,
@@ -100,7 +103,7 @@ export default function STMarket({ wallet }) {
 
   const handleGetAccountSales = () => {
     wallet.viewMethod({
-      contractId: MARKET_CONTRACT_NAME,
+      contractId: NFT_MARKET_CONTRACT_NAME,
       method: "get_account_sales",
       args: {
         account_id,
@@ -112,7 +115,7 @@ export default function STMarket({ wallet }) {
 
   const handleGetSupplySales = () => {
     wallet.viewMethod({
-      contractId: MARKET_CONTRACT_NAME,
+      contractId: NFT_MARKET_CONTRACT_NAME,
       method: "get_supply_sales",
       args: {},
     });
@@ -123,24 +126,25 @@ export default function STMarket({ wallet }) {
   useEffect(() => {
     const getSales = async () => {
       const salesCount = await handleGetSupplySales();
+      console.log(salesCount);
       const sales = [];
 
       for (let i = 0; i < salesCount; i++) {
         const sale = await handleGetSale(i);
         sales.push(sale);
       }
-
+      console.log(sales);
       setListings(sales);
     };
     getSales();
   }, []);
 
-  // const { index } = useParams();
-  const index = 1;
-  // const handleClick = (index) => {
-  //   <Link to={`/STMarket/buy/${index}`} key={index}></link>;
-  //   console.log("click");
-  // };
+  const { index } = useParams();
+  // const index = 1;
+  const handleClick = (index) => {
+    <Link to={`/STMarket/buy/${index}`} key={index}></Link>;
+    console.log("click");
+  };
 
   return (
     <Container>
@@ -158,7 +162,7 @@ export default function STMarket({ wallet }) {
         </thead>
         <tbody>
           {/* 실제로는 이 부분 주석을 풀어야 함 */}
-          {/* {listings.map((sale, index) => (
+          {listings.map((sale, index) => (
             <tr key={index}>
               <td>{sale.sale_id}</td>
               <td>{sale.nft_contract_id}</td>
@@ -169,28 +173,28 @@ export default function STMarket({ wallet }) {
                 <Button onClick={() => handleClick(sale)}>Buy</Button>
               </td>
             </tr>
-          ))} */}
+          ))}
           {/* ----------------------------------------- */}
           {/* 이 아래 부분은 화면 테스트 용, 실제로는 삭제되어야 함 */}
-          <tr key={index}>
+          {/* <tr key={index}>
             <td>test_id</td>
             <td>test_nft_contract_id</td>
             <td>test_token_id</td>
             <td>test_owner_id</td>
             <td>test_sale_conditions</td>
             <td>
-              {/* <Button
+              <Button
                 onClick={() => {
                   handleClick();
                 }}
               >
                 Buy
-              </Button> */}
+              </Button>
               <Link to={`/STMarket/buy/${index}`} key={index}>
                 Buy
               </Link>
             </td>
-          </tr>
+          </tr> */}
           {/* ----------------------------------------- */}
         </tbody>
       </ListingsTable>

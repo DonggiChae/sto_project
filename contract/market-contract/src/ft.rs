@@ -28,7 +28,7 @@ impl Contract {
         );
         
         // 잔액 반환
-        Promise::new(buyer_id).transfer(deposit-value);
+        Promise::new(buyer_id.clone()).transfer(deposit-value);
 
         // 구매자가 가지고 있는 FT 읽고 구매할 만큼 추가
         let mut ft_map = self
@@ -60,7 +60,7 @@ impl Contract {
 
         let value = price_per_ft * trading_amounts;
 
-        Promise::new(seller_id).transfer(value);
+        Promise::new(seller_id.clone()).transfer(value);
         
         // 판매자가 가지고 있는 FT 읽고 판매할 만큼 감소
         let mut ft_map = self.ft_deposits.get(&token_id).unwrap();
