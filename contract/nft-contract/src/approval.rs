@@ -3,7 +3,7 @@ use near_sdk::{ext_contract};
 
 pub trait NonFungibleTokenCore {
     //approve an account ID to transfer a token on your behalf
-    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, sale_conditions: U128, ft_amounts: u64, ft_price: Balance);
+    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, sale_conditions: Option<String>, ft_amounts: u64, ft_price: Balance);
 
     //check if the passed in account has access to approve the token ID
 	fn nft_is_approved(
@@ -28,7 +28,7 @@ trait NonFungibleTokenApprovalsReceiver {
         token_id: TokenId,
         owner_id: AccountId,
         approval_id: u64,
-        sale_conditions: U128,
+        sale_conditions: String,
         ft_amounts: u64,
         ft_price: Balance,
     );
@@ -47,6 +47,7 @@ impl NonFungibleTokenCore for Contract {
         assert_at_least_one_yocto();
 
         let approval_id = 0u64;
+        let owner_id = env::predecessor_account_id();
 
         // if some message was passed into the function, we initiate a cross contract call on the
         // account we're giving access to. 
@@ -55,7 +56,7 @@ impl NonFungibleTokenCore for Contract {
             ext_non_fungible_approval_receiver::ext(account_id)
                 .nft_on_approve(
                     token_id, 
-                    token.owner_id, 
+                    owner_id, 
                     approval_id, 
                     sale_conditions,
                     ft_amounts,
