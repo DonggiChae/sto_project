@@ -3,7 +3,7 @@ use near_sdk::{ext_contract};
 
 pub trait NonFungibleTokenCore {
     //approve an account ID to transfer a token on your behalf
-    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, sale_conditions: U128, ft_amounts: u64, ft_price: Balance);
+    fn nft_approve(&mut self, token_id: TokenId, account_id: AccountId, sale_conditions: U128, ft_amounts: U128, ft_price: Balance);
 
     //check if the passed in account has access to approve the token ID
 	fn nft_is_approved(
