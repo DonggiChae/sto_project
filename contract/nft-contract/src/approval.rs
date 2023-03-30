@@ -79,6 +79,9 @@ impl NonFungibleTokenCore for Contract {
  
          //refund any excess storage attached by the user. If the user didn't attach enough, panic. 
          refund_deposit(storage_used);
+        let approval_id = 0u64;
+        let owner_id = env::predecessor_account_id();
+
         // if some message was passed into the function, we initiate a cross contract call on the
         // account we're giving access to. 
         // Defaulting GAS weight to 1, no attached deposit, and no static GAS to attach.
@@ -86,7 +89,7 @@ impl NonFungibleTokenCore for Contract {
             ext_non_fungible_approval_receiver::ext(account_id.clone())
                 .nft_on_approve(
                     token_id, 
-                    token.owner_id, 
+                    owner_id, 
                     approval_id, 
                     msg,
                     // sale_conditions,
