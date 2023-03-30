@@ -130,7 +130,7 @@ near create-account contract.xxx.testnet --masterAccount xxx.testnet --initialBa
 
 near deploy --accountId contract.xxx.testnet --wasmFile ../out/market.wasm
 
-near call markettest.donggi.test new '{"owner_id": "'markettest.donggi.test'"}' --accountId donggi.test
+near call markettest.donggi.testnet new '{"owner_id": "'markettest.donggi.testnet'"}' --accountId donggi.testnet
 
 near create-account nfttest.donggi.testnet --masterAccount donggi.testnet --initialBalance 5
 

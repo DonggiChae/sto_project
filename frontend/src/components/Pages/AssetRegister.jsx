@@ -42,8 +42,8 @@ export default function AssetRegister({ wallet }) {
   const [media, setMedia] = useState("");
   const [account, setAccount] = useState("");
   const [NFTTokenId, setNFTTokenId] = useState("");
-  const [NFTFTPrice, setNFTFTPrice] = useState(100000000000000000000000);
-  const [NFTFTAmounts, setNFTFTAmounts] = useState(100000000000000000000000);
+  const [NFTFTPrice, setNFTFTPrice] = useState("100000000000000000000000");
+  const [NFTFTAmounts, setNFTFTAmounts] = useState("100000000000000000000000");
 
   const handleTokenIdChange = (e) => {
     setTokenId(e.target.value);
@@ -105,14 +105,14 @@ export default function AssetRegister({ wallet }) {
     wallet.callMethod({
       contractId: NFT_CONTRACT_NAME,
       method: "nft_approve",
-      receiver_id: NFT_MARKET_CONTRACT_NAME,
       args: {
         token_id: NFTTokenId,
-        account_id: account,
-        // msg: "9000000000000000000000000", //sales_condition
-        sale_conditions: parseInt(NFTFTPrice),
-        ft_amounts: parseInt(NFTFTAmounts),
-        ft_price: parseInt(NFTFTPrice),
+        account_id: NFT_MARKET_CONTRACT_NAME,
+        msg: "9000000000000000000000000", //sales_condition
+        sale_conditions: NFTFTPrice,
+        // receiver_id: account,
+        ft_amounts: NFTFTAmounts,
+        ft_price: NFTFTPrice,
       },
       deposit: "100000000000000000000000",
     });

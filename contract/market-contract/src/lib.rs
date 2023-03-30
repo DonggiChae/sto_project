@@ -26,7 +26,7 @@ const GAS_FOR_RESOLVE_PURCHASE: Gas = Gas(115_000_000_000_000);
 const GAS_FOR_NFT_TRANSFER: Gas = Gas(15_000_000_000_000);
 
 //the minimum storage to have a sale on the contract.
-const STORAGE_PER_SALE: u128 = 1000 * STORAGE_PRICE_PER_BYTE;
+const STORAGE_PER_SALE: u128 = 1000 * STORAGE_PRICE_PER_BYTE ;
 
 //every sale will have a unique ID which is `CONTRACT + DELIMITER + TOKEN_ID`
 static DELIMETER: &str = ".";

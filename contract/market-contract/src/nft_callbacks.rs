@@ -21,8 +21,9 @@ trait NonFungibleTokenApprovalsReceiver {
         owner_id: AccountId,
         approval_id: u64,
         msg: String,
-        ft_amounts: U128,
-        ft_price: U128,
+        // sale_conditions: String,
+        ft_amounts: String,
+        ft_price: String,
     );
 }
 
@@ -37,8 +38,9 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         owner_id: AccountId,
         approval_id: u64,
         msg: String,
-        ft_amounts: U128,
-        ft_price: U128,
+        // sale_conditions: String,
+        ft_amounts: String,
+        ft_price: String,
     ) {
         // get the contract ID which is the predecessor
         let nft_contract_id = env::predecessor_account_id();
@@ -76,10 +78,16 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         );
 
         //if all these checks pass we can create the sale conditions object.
-        let SaleArgs { sale_conditions } =
-            //the sale conditions come from the msg field. The market assumes that the user passed
-            //in a proper msg. If they didn't, it panics. 
-            near_sdk::serde_json::from_str(&msg).expect("Not valid SaleArgs");
+        // let SaleArgs { sale_conditions } =
+        //     //the sale conditions come from the msg field. The market assumes that the user passed
+        //     //in a proper msg. If they didn't, it panics. 
+        //     near_sdk::serde_json::from_str(&msg).expect("Not valid SaleArgs");
+
+        // let SaleArgs { sale_conditions } = near_sdk::serde_json::from_str(&sale_conditions).expect("Not valid SaleArgs");
+
+        let sale_conditions = U128(msg.parse::<u128>().unwrap());
+        let ft_amounts = U128(ft_amounts.parse::<u128>().unwrap());
+        let ft_price = U128(ft_price.parse::<u128>().unwrap());
 
         //create the unique sale ID which is the contract + DELIMITER + token ID
         let contract_and_token_id = format!("{}{}{}", nft_contract_id, DELIMETER, token_id);
