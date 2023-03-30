@@ -22,7 +22,7 @@ trait NonFungibleTokenApprovalsReceiver {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
-        ft_price: u64,
+        ft_price: Balance,
     );
 }
 
@@ -38,7 +38,7 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         approval_id: u64,
         msg: String,
         ft_amounts: u64,
-        ft_price: u64,
+        ft_price: Balance,
     ) {
         // get the contract ID which is the predecessor
         let nft_contract_id = env::predecessor_account_id();

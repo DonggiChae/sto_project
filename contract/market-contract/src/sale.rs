@@ -16,7 +16,7 @@ pub struct Sale {
     //sale price in yoctoNEAR that the token is listed for
     pub sale_conditions: SalePriceInYoctoNear,
     pub ft_amounts: u64, //the amount of FTs that are being sold
-    pub ft_price: u64, //the price of the FTs
+    pub ft_price: Balance, //the price of the FTs
 }
 
 #[near_bindgen]
