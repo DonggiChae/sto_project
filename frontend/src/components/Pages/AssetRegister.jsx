@@ -43,6 +43,7 @@ export default function AssetRegister({ wallet }) {
   const [account, setAccount] = useState("");
   const [NFTTokenId, setNFTTokenId] = useState("");
   const [NFTFTPrice, setNFTFTPrice] = useState("100000000000000000000000");
+  const [NFTPrice, setNFTPrice] = useState("100000000000000000000000");
   const [NFTFTAmounts, setNFTFTAmounts] = useState("100000000000000000000000");
 
   const handleTokenIdChange = (e) => {
@@ -66,6 +67,10 @@ export default function AssetRegister({ wallet }) {
   };
 
   const handleNFTPriceChange = (e) => {
+    setNFTPrice(e.target.value);
+  };
+
+  const handleNFTFTPriceChange = (e) => {
     setNFTFTPrice(e.target.value);
   };
 

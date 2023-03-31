@@ -75,7 +75,7 @@ export default function Header({ isSignedIn, wallet }) {
   return (
     <Container>
       <HeaderWrapper>
-        <LogoWrapper>TrusT</LogoWrapper>
+        <LogoWrapper>T.rusT</LogoWrapper>
         <NavContainer>
           <StyledLink to="/">
             <NameWrapper>AssetRegister</NameWrapper>

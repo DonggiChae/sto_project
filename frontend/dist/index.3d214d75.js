@@ -27210,8 +27210,9 @@ function App({ isSignedIn , wallet  }) {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                        path: "/stMarket",
+                        path: "/STMarket",
                         element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _stmarketDefault.default), {
+                            isSignedIn: isSignedIn,
                             wallet: wallet
                         }, void 0, false, void 0, void 0)
                     }, void 0, false, {
@@ -27220,23 +27221,25 @@ function App({ isSignedIn , wallet  }) {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                        path: "/MyPage",
-                        element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _myPageDefault.default), {
+                        path: "/STMarket/buy/:tokenId",
+                        element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _stbuyDefault.default), {
+                            isSignedIn: isSignedIn,
                             wallet: wallet
                         }, void 0, false, void 0, void 0)
                     }, void 0, false, {
                         fileName: "App.js",
-                        lineNumber: 23,
+                        lineNumber: 26,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                        path: "/stMarket/buy/:id",
-                        element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _stbuyDefault.default), {
+                        path: "/MyPage",
+                        element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _myPageDefault.default), {
+                            isSignedIn: isSignedIn,
                             wallet: wallet
                         }, void 0, false, void 0, void 0)
                     }, void 0, false, {
                         fileName: "App.js",
-                        lineNumber: 24,
+                        lineNumber: 30,
                         columnNumber: 9
                     }, this)
                 ]
@@ -33112,7 +33115,7 @@ function Header({ isSignedIn , wallet  }) {
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(HeaderWrapper, {
             children: [
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(LogoWrapper, {
-                    children: "TrusT"
+                    children: "T.rusT"
                 }, void 0, false, {
                     fileName: "src/components/Header/Header.jsx",
                     lineNumber: 78,
@@ -35347,6 +35350,7 @@ function AssetRegister({ wallet  }) {
     const [account, setAccount] = (0, _react.useState)("");
     const [NFTTokenId, setNFTTokenId] = (0, _react.useState)("");
     const [NFTFTPrice, setNFTFTPrice] = (0, _react.useState)("100000000000000000000000");
+    const [NFTPrice, setNFTPrice] = (0, _react.useState)("100000000000000000000000");
     const [NFTFTAmounts, setNFTFTAmounts] = (0, _react.useState)("100000000000000000000000");
     const handleTokenIdChange = (e)=>{
         setTokenId(e.target.value);
@@ -35364,6 +35368,9 @@ function AssetRegister({ wallet  }) {
         setNFTTokenId(e.target.value);
     };
     const handleNFTPriceChange = (e)=>{
+        setNFTPrice(e.target.value);
+    };
+    const handleNFTFTPriceChange = (e)=>{
         setNFTFTPrice(e.target.value);
     };
     const handleFTAmountsChange = (e)=>{
@@ -35434,7 +35441,7 @@ function AssetRegister({ wallet  }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/components/Pages/AssetRegister.jsx",
-                                lineNumber: 132,
+                                lineNumber: 137,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _inputDefault.default), {
@@ -35444,7 +35451,7 @@ function AssetRegister({ wallet  }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/components/Pages/AssetRegister.jsx",
-                                lineNumber: 138,
+                                lineNumber: 143,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _inputDefault.default), {
@@ -35454,7 +35461,7 @@ function AssetRegister({ wallet  }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/components/Pages/AssetRegister.jsx",
-                                lineNumber: 144,
+                                lineNumber: 149,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _inputDefault.default), {
@@ -35464,7 +35471,7 @@ function AssetRegister({ wallet  }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/components/Pages/AssetRegister.jsx",
-                                lineNumber: 150,
+                                lineNumber: 155,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -35472,19 +35479,19 @@ function AssetRegister({ wallet  }) {
                                 title: "mint"
                             }, void 0, false, {
                                 fileName: "src/components/Pages/AssetRegister.jsx",
-                                lineNumber: 156,
+                                lineNumber: 161,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/Pages/AssetRegister.jsx",
-                        lineNumber: 131,
+                        lineNumber: 136,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/Pages/AssetRegister.jsx",
-                lineNumber: 129,
+                lineNumber: 134,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(NFTFormWrapper, {
@@ -35497,18 +35504,18 @@ function AssetRegister({ wallet  }) {
                             title: "deposit"
                         }, void 0, false, {
                             fileName: "src/components/Pages/AssetRegister.jsx",
-                            lineNumber: 162,
+                            lineNumber: 167,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "src/components/Pages/AssetRegister.jsx",
-                        lineNumber: 161,
+                        lineNumber: 166,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/Pages/AssetRegister.jsx",
-                lineNumber: 159,
+                lineNumber: 164,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(NFTFormWrapper, {
@@ -35524,7 +35531,7 @@ function AssetRegister({ wallet  }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/components/Pages/AssetRegister.jsx",
-                                lineNumber: 168,
+                                lineNumber: 173,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _inputDefault.default), {
@@ -35534,7 +35541,7 @@ function AssetRegister({ wallet  }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/components/Pages/AssetRegister.jsx",
-                                lineNumber: 174,
+                                lineNumber: 179,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _inputDefault.default), {
@@ -35544,7 +35551,7 @@ function AssetRegister({ wallet  }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "src/components/Pages/AssetRegister.jsx",
-                                lineNumber: 180,
+                                lineNumber: 185,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -35552,30 +35559,30 @@ function AssetRegister({ wallet  }) {
                                 title: "approve"
                             }, void 0, false, {
                                 fileName: "src/components/Pages/AssetRegister.jsx",
-                                lineNumber: 186,
+                                lineNumber: 191,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/Pages/AssetRegister.jsx",
-                        lineNumber: 167,
+                        lineNumber: 172,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/Pages/AssetRegister.jsx",
-                lineNumber: 165,
+                lineNumber: 170,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/components/Pages/AssetRegister.jsx",
-        lineNumber: 127,
+        lineNumber: 132,
         columnNumber: 5
     }, this);
 }
 exports.default = AssetRegister;
-_s(AssetRegister, "naNV58BFLnKkvRZBJyumWkyWQ/E=");
+_s(AssetRegister, "XkQoFClBHdlKbSVI5VL2at8tbUk=");
 _c3 = AssetRegister;
 var _c, _c1, _c2, _c3;
 $RefreshReg$(_c, "Container");
@@ -36456,36 +36463,26 @@ function STMarket({ wallet  }) {
     (0, _react.useEffect)(()=>{
         const getSales = async ()=>{
             const salesCount = await handleGetSupplySales();
-            console.log(salesCount);
             const sales = [];
+            console.log(salesCount);
             for(let i = 0; i < salesCount; i++){
                 const sale = await handleGetSale(i);
                 sales.push(sale);
             }
-            console.log(sales);
             setListings(sales);
         };
         getSales();
     }, []);
-    const { index  } = (0, _reactRouterDom.useParams)();
+    // const { index } = useParams();
     // const index = 1;
-    const handleClick = (index)=>{
-        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
-            to: `/STMarket/buy/${index}`
-        }, index, false, {
-            fileName: "src/components/Pages/STMarket.jsx",
-            lineNumber: 145,
-            columnNumber: 5
-        }, this);
-        console.log("click");
-    };
+    // const tokenId = "test_token_id";
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Container, {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
                 children: "STMarket"
             }, void 0, false, {
                 fileName: "src/components/Pages/STMarket.jsx",
-                lineNumber: 151,
+                lineNumber: 148,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(ListingsTable, {
@@ -36497,53 +36494,53 @@ function STMarket({ wallet  }) {
                                     children: "Sale ID"
                                 }, void 0, false, {
                                     fileName: "src/components/Pages/STMarket.jsx",
-                                    lineNumber: 155,
+                                    lineNumber: 152,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("th", {
                                     children: "NFT Contract"
                                 }, void 0, false, {
                                     fileName: "src/components/Pages/STMarket.jsx",
-                                    lineNumber: 156,
+                                    lineNumber: 153,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("th", {
                                     children: "Token ID"
                                 }, void 0, false, {
                                     fileName: "src/components/Pages/STMarket.jsx",
-                                    lineNumber: 157,
+                                    lineNumber: 154,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("th", {
                                     children: "Owner"
                                 }, void 0, false, {
                                     fileName: "src/components/Pages/STMarket.jsx",
-                                    lineNumber: 158,
+                                    lineNumber: 155,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("th", {
                                     children: "Sale Price"
                                 }, void 0, false, {
                                     fileName: "src/components/Pages/STMarket.jsx",
-                                    lineNumber: 159,
+                                    lineNumber: 156,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("th", {
                                     children: "Buy"
                                 }, void 0, false, {
                                     fileName: "src/components/Pages/STMarket.jsx",
-                                    lineNumber: 160,
+                                    lineNumber: 157,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "src/components/Pages/STMarket.jsx",
-                            lineNumber: 154,
+                            lineNumber: 151,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "src/components/Pages/STMarket.jsx",
-                        lineNumber: 153,
+                        lineNumber: 150,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tbody", {
@@ -36553,151 +36550,85 @@ function STMarket({ wallet  }) {
                                         children: sale.sale_id
                                     }, void 0, false, {
                                         fileName: "src/components/Pages/STMarket.jsx",
-                                        lineNumber: 167,
+                                        lineNumber: 165,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
                                         children: sale.nft_contract_id
                                     }, void 0, false, {
                                         fileName: "src/components/Pages/STMarket.jsx",
-                                        lineNumber: 168,
+                                        lineNumber: 166,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
                                         children: sale.token_id
                                     }, void 0, false, {
                                         fileName: "src/components/Pages/STMarket.jsx",
-                                        lineNumber: 169,
+                                        lineNumber: 167,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
                                         children: sale.owner_id
                                     }, void 0, false, {
                                         fileName: "src/components/Pages/STMarket.jsx",
-                                        lineNumber: 170,
+                                        lineNumber: 168,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
                                         children: sale.sale_conditions
                                     }, void 0, false, {
                                         fileName: "src/components/Pages/STMarket.jsx",
-                                        lineNumber: 171,
+                                        lineNumber: 169,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
                                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Button, {
-                                            onClick: ()=>handleClick(sale),
-                                            children: "Buy"
+                                            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
+                                                to: `/STMarket/buy/${tokenId}`,
+                                                tokenId: tokenId,
+                                                children: "BUY"
+                                            }, tokenId, false, {
+                                                fileName: "src/components/Pages/STMarket.jsx",
+                                                lineNumber: 172,
+                                                columnNumber: 19
+                                            }, this)
                                         }, void 0, false, {
                                             fileName: "src/components/Pages/STMarket.jsx",
-                                            lineNumber: 173,
+                                            lineNumber: 171,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "src/components/Pages/STMarket.jsx",
-                                        lineNumber: 172,
+                                        lineNumber: 170,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, index, true, {
                                 fileName: "src/components/Pages/STMarket.jsx",
-                                lineNumber: 166,
+                                lineNumber: 164,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "src/components/Pages/STMarket.jsx",
-                        lineNumber: 163,
+                        lineNumber: 160,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/Pages/STMarket.jsx",
-                lineNumber: 152,
+                lineNumber: 149,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/components/Pages/STMarket.jsx",
-        lineNumber: 150,
+        lineNumber: 147,
         columnNumber: 5
     }, this);
 }
 exports.default = STMarket;
-_s(STMarket, "v7fpAWtRwI/lFLtK0LDs9L0zDZU=", false, function() {
-    return [
-        (0, _reactRouterDom.useParams)
-    ];
-});
+_s(STMarket, "z9BV6DnffbB5IKTzJloxfuIWwk4=");
 _c3 = STMarket;
-const marketContract = {
-    get_sale: async (nft_contract_id1, token_id1)=>{
-        return await CONTRACT.query({
-            contractId: MARKET_CONTRACT_ID,
-            methodName: "get_sale",
-            args: {
-                nft_contract_id: nft_contract_id1,
-                token_id: token_id1
-            }
-        });
-    },
-    add_sale: async (nft_contract_id1, token_id1, price1)=>{
-        return await CONTRACT.functionCall({
-            contractId: MARKET_CONTRACT_ID,
-            methodName: "add_sale",
-            args: {
-                nft_contract_id: nft_contract_id1,
-                token_id: token_id1,
-                price: price1
-            },
-            gas: "100000000000000",
-            attachedDeposit: "1000000000000000000000"
-        });
-    },
-    delete_sale: async (nft_contract_id1, token_id1)=>{
-        return await CONTRACT.functionCall({
-            contractId: MARKET_CONTRACT_ID,
-            methodName: "delete_sale",
-            args: {
-                nft_contract_id: nft_contract_id1,
-                token_id: token_id1
-            },
-            gas: "100000000000000",
-            attachedDeposit: "1000000000000000000000"
-        });
-    },
-    offer: async (nft_contract_id1, token_id1, ft_amount1, amount1)=>{
-        return await CONTRACT.functionCall({
-            contractId: MARKET_CONTRACT_ID,
-            methodName: "offer",
-            args: {
-                nft_contract_id: nft_contract_id1,
-                token_id: token_id1,
-                ft_amount: ft_amount1,
-                amount: amount1
-            },
-            gas: "100000000000000",
-            attachedDeposit: "1000000000000000000000"
-        });
-    },
-    get_account_sales: async (account_id1, from_index1, limit1)=>{
-        return await CONTRACT.query({
-            contractId: MARKET_CONTRACT_ID,
-            methodName: "get_account_sales",
-            args: {
-                account_id: account_id1,
-                from_index: from_index1,
-                limit: limit1
-            }
-        });
-    },
-    get_supply_sales: async ()=>{
-        return await CONTRACT.query({
-            contractId: MARKET_CONTRACT_ID,
-            methodName: "get_supply_sales",
-            args: {}
-        });
-    }
-};
 var _c, _c1, _c2, _c3;
 $RefreshReg$(_c, "Container");
 $RefreshReg$(_c1, "ListingsTable");
@@ -36728,9 +36659,11 @@ var _dotenvDefault = parcelHelpers.interopDefault(_dotenv);
 var _reactRouterDom = require("react-router-dom");
 var _stbuy = require("./STBuy");
 var _stbuyDefault = parcelHelpers.interopDefault(_stbuy);
+var _regeneratorRuntime = require("regenerator-runtime");
 var _s = $RefreshSig$();
 (0, _dotenvDefault.default).config();
-const MARKET_CONTRACT_NAME = undefined;
+const NFT_CONTRACT_NAME = "nftcontract.donggi.testnet";
+const NFT_MARKET_CONTRACT_NAME = "markettest.donggi.testnet";
 const Container = (0, _styledComponentsDefault.default).div`
   margin-top: 120px;
   display: flex;
@@ -36780,74 +36713,91 @@ const Image = (0, _styledComponentsDefault.default).img`
   object-fit: cover;
 `;
 _c6 = Image;
-function STBuy({ wallet  }) {
+function STBuy({ wallet , tokenId  }) {
     _s();
-    const { id  } = (0, _reactRouterDom.useParams)();
-    // const [nft, setNft] = useState(null);
+    const [nft, setNft] = (0, _react.useState)(null);
     const [quantity, setQuantity] = (0, _react.useState)(1);
-    // useEffect(() => {
-    //   const fetchNft = async () => {
-    //     const nftContract = await getNftContract();
-    //     const result = await nftContract.nft_token({ token_id: id });
-    //     setNft(result);
-    //   };
-    //   fetchNft();
-    // }, [id]);
-    // useEffect(() => {
-    //   const fetchMarketPrice = async () => {
-    //     const marketContract = await getMarketContract();
-    //     const result = await marketContract.get_price({ nft_contract_token: id });
-    //     setMarketPrice(result);
-    //   };
-    //   fetchMarketPrice();
-    // }, [id]);
-    const handlePurchase = async ()=>{
-    // const marketContract = await getMarketContract();
-    // const amount = parseNearAmount((marketPrice * quantity).toString());
-    // await marketContract.nft_purchase({
-    //   nft_contract_token: id,
-    //   deposit: amount,
-    // });
+    const [marketPrice, setMarketPrice] = (0, _react.useState)();
+    // nft.core의 nft_token 에서 nft 정보 가져옴
+    const nftResult = async ()=>{
+        await wallet.viewMethod({
+            contractId: NFT_CONTRACT_NAME,
+            method: "nft_token",
+            args: {
+                token_id: tokenId
+            }
+        });
     };
-    const metadata = {
-        title: "test-title",
-        description: "test-description",
-        media: ""
+    // 토큰 가격 정보 lib.rs에서 가져옴
+    const priceResult = async ()=>{
+        await wallet.viewMethod({
+            contractId: NFT_MARKET_CONTRACT_NAME,
+            method: "price_per_ft",
+            args: {
+                token_id: tokenId
+            }
+        });
     };
-    const price = 0.1;
+    (0, _react.useEffect)(()=>{
+        setNft(nftResult);
+    }, [
+        tokenId
+    ]);
+    (0, _react.useEffect)(()=>{
+        setMarketPrice(priceResult);
+    }, [
+        tokenId
+    ]);
+    const handleBuy = async (quantity)=>{
+        await wallet.callMethod({
+            contractId: NFT_MARKET_CONTRACT_NAME,
+            method: "buy_token",
+            args: {
+                token_id: tokenId,
+                trading_amounts: quantity
+            }
+        });
+    };
+    // 화면 테스트 용
+    // const metadata = {
+    //   title: "test-title",
+    //   description: "test-description",
+    //   media: "",
+    // };
+    // const price = 1;
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Container, {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Image, {
                 src: "https://via.placeholder.com/300x300",
-                alt: metadata.title
+                alt: nft.metadata.title
             }, void 0, false, {
                 fileName: "src/components/Pages/STBuy.jsx",
-                lineNumber: 101,
+                lineNumber: 118,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Title, {
-                children: metadata.title
+                children: nft.metadata.title
             }, void 0, false, {
                 fileName: "src/components/Pages/STBuy.jsx",
-                lineNumber: 103,
+                lineNumber: 123,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Description, {
-                children: metadata.description
+                children: nft.metadata.description
             }, void 0, false, {
                 fileName: "src/components/Pages/STBuy.jsx",
-                lineNumber: 104,
+                lineNumber: 124,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Price, {
                 children: [
                     "Price: ",
-                    price,
+                    marketPrice,
                     " NEAR"
                 ]
             }, void 0, true, {
                 fileName: "src/components/Pages/STBuy.jsx",
-                lineNumber: 105,
+                lineNumber: 125,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
@@ -36858,7 +36808,7 @@ function STBuy({ wallet  }) {
                                 children: "Quantity : "
                             }, void 0, false, {
                                 fileName: "src/components/Pages/STBuy.jsx",
-                                lineNumber: 108,
+                                lineNumber: 128,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -36867,13 +36817,13 @@ function STBuy({ wallet  }) {
                                 onChange: (e)=>setQuantity(e.target.value)
                             }, void 0, false, {
                                 fileName: "src/components/Pages/STBuy.jsx",
-                                lineNumber: 109,
+                                lineNumber: 129,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/Pages/STBuy.jsx",
-                        lineNumber: 107,
+                        lineNumber: 127,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -36884,36 +36834,32 @@ function STBuy({ wallet  }) {
                         ]
                     }, void 0, true, {
                         fileName: "src/components/Pages/STBuy.jsx",
-                        lineNumber: 115,
+                        lineNumber: 135,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(BuyButton, {
-                        onClick: handlePurchase(),
+                        onClick: handleBuy(),
                         children: "Buy"
                     }, void 0, false, {
                         fileName: "src/components/Pages/STBuy.jsx",
-                        lineNumber: 116,
+                        lineNumber: 136,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/Pages/STBuy.jsx",
-                lineNumber: 106,
+                lineNumber: 126,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/components/Pages/STBuy.jsx",
-        lineNumber: 100,
+        lineNumber: 117,
         columnNumber: 5
     }, this);
 }
 exports.default = STBuy;
-_s((0, _stbuyDefault.default), "BqvJLtkU2r7zSrsonGzT6BPvKH4=", false, function() {
-    return [
-        (0, _reactRouterDom.useParams)
-    ];
-});
+_s((0, _stbuyDefault.default), "CLJBSKlO2nuhXAo7ZJQ6iS4jI9c=");
 _c7 = (0, _stbuyDefault.default);
 var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7;
 $RefreshReg$(_c, "Container");
@@ -36930,7 +36876,7 @@ $RefreshReg$(_c7, "STBuy");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","styled-components":"1U3k6","dotenv":"lErsX","react-router-dom":"9xmpe","./STBuy":"6Azbk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"jarQ6":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","styled-components":"1U3k6","dotenv":"lErsX","react-router-dom":"9xmpe","./STBuy":"6Azbk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","regenerator-runtime":"dXNgZ"}],"jarQ6":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _styledComponents = require("styled-components");
@@ -65938,8 +65884,8 @@ var _core = require("@near-wallet-selector/core");
 var _hwTransportWebhid = require("@ledgerhq/hw-transport-webhid");
 var _hwTransportWebhidDefault = parcelHelpers.interopDefault(_hwTransportWebhid);
 var _nearApiJs = require("near-api-js");
-var Buffer = require("666e97fff48c4cc9").Buffer;
 var global = arguments[3];
+var Buffer = require("666e97fff48c4cc9").Buffer;
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
 

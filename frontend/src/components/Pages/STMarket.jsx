@@ -77,7 +77,7 @@ export default function STMarket({ wallet }) {
 
   const handleDeleteSale = async () => {
     await wallet.callMethod({
-      contractId: NFT_MARKET_CONTRACT_NAME,
+      contractId:NFT_MARKET_CONTRACT_NAME,
       method: "delete_sale",
       args: {
         nft_contract_id,
@@ -126,25 +126,22 @@ export default function STMarket({ wallet }) {
   useEffect(() => {
     const getSales = async () => {
       const salesCount = await handleGetSupplySales();
-      console.log(salesCount);
       const sales = [];
+      console.log(salesCount);
 
       for (let i = 0; i < salesCount; i++) {
         const sale = await handleGetSale(i);
         sales.push(sale);
       }
-      console.log(sales);
+
       setListings(sales);
     };
     getSales();
   }, []);
 
-  const { index } = useParams();
+  // const { index } = useParams();
   // const index = 1;
-  const handleClick = (index) => {
-    <Link to={`/STMarket/buy/${index}`} key={index}></Link>;
-    console.log("click");
-  };
+  // const tokenId = "test_token_id";
 
   return (
     <Container>
@@ -161,6 +158,7 @@ export default function STMarket({ wallet }) {
           </tr>
         </thead>
         <tbody>
+          {/* <td>test</td> */}
           {/* 실제로는 이 부분 주석을 풀어야 함 */}
           {listings.map((sale, index) => (
             <tr key={index}>
@@ -170,11 +168,19 @@ export default function STMarket({ wallet }) {
               <td>{sale.owner_id}</td>
               <td>{sale.sale_conditions}</td>
               <td>
-                <Button onClick={() => handleClick(sale)}>Buy</Button>
+                <Button>
+                  <Link
+                    to={`/STMarket/buy/${tokenId}`}
+                    key={tokenId}
+                    tokenId={tokenId}
+                  >
+                    BUY
+                  </Link>
+                </Button>
               </td>
             </tr>
           ))}
-          {/* ----------------------------------------- */}
+          {/* -----------------------------------------
           {/* 이 아래 부분은 화면 테스트 용, 실제로는 삭제되어야 함 */}
           {/* <tr key={index}>
             <td>test_id</td>
@@ -183,16 +189,15 @@ export default function STMarket({ wallet }) {
             <td>test_owner_id</td>
             <td>test_sale_conditions</td>
             <td>
-              <Button
-                onClick={() => {
-                  handleClick();
-                }}
-              >
-                Buy
+              <Button>
+                <Link
+                  to={`/STMarket/buy/${tokenId}`}
+                  key={tokenId}
+                  tokenId={tokenId}
+                >
+                  BUY
+                </Link>
               </Button>
-              <Link to={`/STMarket/buy/${index}`} key={index}>
-                Buy
-              </Link>
             </td>
           </tr> */}
           {/* ----------------------------------------- */}
@@ -201,78 +206,3 @@ export default function STMarket({ wallet }) {
     </Container>
   );
 }
-
-const marketContract = {
-  get_sale: async (nft_contract_id, token_id) => {
-    return await CONTRACT.query({
-      contractId: MARKET_CONTRACT_ID,
-      methodName: "get_sale",
-      args: {
-        nft_contract_id,
-        token_id,
-      },
-    });
-  },
-
-  add_sale: async (nft_contract_id, token_id, price) => {
-    return await CONTRACT.functionCall({
-      contractId: MARKET_CONTRACT_ID,
-      methodName: "add_sale",
-      args: {
-        nft_contract_id,
-        token_id,
-        price,
-      },
-      gas: "100000000000000",
-      attachedDeposit: "1000000000000000000000",
-    });
-  },
-
-  delete_sale: async (nft_contract_id, token_id) => {
-    return await CONTRACT.functionCall({
-      contractId: MARKET_CONTRACT_ID,
-      methodName: "delete_sale",
-      args: {
-        nft_contract_id,
-        token_id,
-      },
-      gas: "100000000000000",
-      attachedDeposit: "1000000000000000000000",
-    });
-  },
-
-  offer: async (nft_contract_id, token_id, ft_amount, amount) => {
-    return await CONTRACT.functionCall({
-      contractId: MARKET_CONTRACT_ID,
-      methodName: "offer",
-      args: {
-        nft_contract_id,
-        token_id,
-        ft_amount,
-        amount,
-      },
-      gas: "100000000000000",
-      attachedDeposit: "1000000000000000000000",
-    });
-  },
-
-  get_account_sales: async (account_id, from_index, limit) => {
-    return await CONTRACT.query({
-      contractId: MARKET_CONTRACT_ID,
-      methodName: "get_account_sales",
-      args: {
-        account_id,
-        from_index,
-        limit,
-      },
-    });
-  },
-
-  get_supply_sales: async () => {
-    return await CONTRACT.query({
-      contractId: MARKET_CONTRACT_ID,
-      methodName: "get_supply_sales",
-      args: {},
-    });
-  },
-};

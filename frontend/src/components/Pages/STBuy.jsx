@@ -3,9 +3,11 @@ import styled from "styled-components";
 import dotenv from "dotenv";
 import { useParams } from "react-router-dom";
 import STBuy from "./STBuy";
+import { async } from "regenerator-runtime";
 
 dotenv.config();
-const MARKET_CONTRACT_NAME = process.env.MARKET_CONTRACT_NAME;
+const NFT_CONTRACT_NAME = process.env.NFT_CONTRACT_NAME;
+const NFT_MARKET_CONTRACT_NAME = process.env.NFT_MARKET_CONTRACT_NAME;
 
 const Container = styled.div`
   margin-top: 120px;
@@ -56,53 +58,71 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-export default function STBuy({ wallet }) {
-  const { id } = useParams();
-  // const [nft, setNft] = useState(null);
+export default function STBuy({ wallet, tokenId }) {
+  const [nft, setNft] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [marketPrice, setMarketPrice] = useState();
 
-  // useEffect(() => {
-  //   const fetchNft = async () => {
-  //     const nftContract = await getNftContract();
-  //     const result = await nftContract.nft_token({ token_id: id });
-  //     setNft(result);
-  //   };
-  //   fetchNft();
-  // }, [id]);
-
-  // useEffect(() => {
-  //   const fetchMarketPrice = async () => {
-  //     const marketContract = await getMarketContract();
-  //     const result = await marketContract.get_price({ nft_contract_token: id });
-  //     setMarketPrice(result);
-  //   };
-  //   fetchMarketPrice();
-  // }, [id]);
-
-  const handlePurchase = async () => {
-    // const marketContract = await getMarketContract();
-    // const amount = parseNearAmount((marketPrice * quantity).toString());
-    // await marketContract.nft_purchase({
-    //   nft_contract_token: id,
-    //   deposit: amount,
-    // });
+  // nft.core의 nft_token 에서 nft 정보 가져옴
+  const nftResult = async () => {
+    await wallet.viewMethod({
+      contractId: NFT_CONTRACT_NAME,
+      method: "nft_token",
+      args: {
+        token_id: tokenId,
+      },
+    });
   };
 
-  const metadata = {
-    title: "test-title",
-    description: "test-description",
-    media: "",
+  // 토큰 가격 정보 lib.rs에서 가져옴
+  const priceResult = async () => {
+    await wallet.viewMethod({
+      contractId: NFT_MARKET_CONTRACT_NAME,
+      method: "price_per_ft",
+      args: {
+        token_id: tokenId,
+      },
+    });
   };
 
-  const price = 0.1;
+  useEffect(() => {
+    setNft(nftResult);
+  }, [tokenId]);
+
+  useEffect(() => {
+    setMarketPrice(priceResult);
+  }, [tokenId]);
+
+  const handleBuy = async (quantity) => {
+    await wallet.callMethod({
+      contractId: NFT_MARKET_CONTRACT_NAME,
+      method: "buy_token",
+      args: {
+        token_id: tokenId,
+        trading_amounts: quantity,
+      },
+    });
+  };
+
+  // 화면 테스트 용
+  // const metadata = {
+  //   title: "test-title",
+  //   description: "test-description",
+  //   media: "",
+  // };
+
+  // const price = 1;
 
   return (
     <Container>
-      <Image src="https://via.placeholder.com/300x300" alt={metadata.title} />
+      <Image
+        src="https://via.placeholder.com/300x300"
+        alt={nft.metadata.title}
+      />
 
-      <Title>{metadata.title}</Title>
-      <Description>{metadata.description}</Description>
-      <Price>Price: {price} NEAR</Price>
+      <Title>{nft.metadata.title}</Title>
+      <Description>{nft.metadata.description}</Description>
+      <Price>Price: {marketPrice} NEAR</Price>
       <form>
         <Quantity>
           <label>Quantity : </label>
@@ -113,7 +133,7 @@ export default function STBuy({ wallet }) {
           />
         </Quantity>
         <div>Total Price : {price * quantity} NEAR</div>
-        <BuyButton onClick={handlePurchase()}>Buy</BuyButton>
+        <BuyButton onClick={handleBuy()}>Buy</BuyButton>
       </form>
     </Container>
   );
