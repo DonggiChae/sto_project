@@ -49,9 +49,11 @@ This project is for the NCD program.
 
 # The reference documents
 
-https://github.com/near-examples/ft-tutorial/tree/main/market-contract
-https://github.com/near-examples/nft-tutorial/tree/8.marketplace/market-contract
-https://docs.near.org/tutorials/nfts/marketplace
+- https://github.com/near-examples/ft-tutorial/tree/main/market-contract
+
+- https://github.com/near-examples/nft-tutorial/tree/8.marketplace/market-contract
+
+- https://docs.near.org/tutorials/nfts/marketplace
 
 
 
