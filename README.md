@@ -4,7 +4,7 @@
 ![image](https://user-images.githubusercontent.com/69336797/229003603-77b5cb4f-a3ee-470f-bdbe-190e30abeeeb.png)
 This project is for the NCD program.
 
-# 0.
+# 0. Near certified Developer Course Goals
 
  1. **perceiving** web 3 in the context of human history
 
@@ -16,7 +16,8 @@ This project is for the NCD program.
 
  5. **deploying** contracts and a sensible user interface
 
-We did it all 5 things.
+
+
 
 # 1. **perceiving** web 3 in the context of human history
 
