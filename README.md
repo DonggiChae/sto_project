@@ -42,16 +42,16 @@ Why we need an STO in the context of human history
 - The investment opportunity of the individuals can be broadened besides the existing big investment institution**
 
 ![제목 없음-2022-11-03-2052](https://user-images.githubusercontent.com/113986828/229123739-e002d7af-d798-432d-8072-b42ce4ad7e31.png)
-One is completing the offering and exchange part of the STO process.
+Our goal is completing the offering and exchange part of the STO process.
 We divided the STO process into four parts. 
 
-1. oracle 
+1. Oracle 
 
-2. offering 
+2. Offering 
 
 3. Trust 
 
-4. exchange
+4. Exchange
 
 We implemented 2, 4 of those 4 process. 
 
