@@ -1,4 +1,5 @@
-# near-sto-Project-T.rusT
+# NCD Demo Project  
+## STO Project T.rusT
 
 ![image](https://user-images.githubusercontent.com/69336797/229003603-77b5cb4f-a3ee-470f-bdbe-190e30abeeeb.png)
 This project is for the NCD program.
