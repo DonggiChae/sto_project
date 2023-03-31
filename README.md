@@ -9,22 +9,33 @@ We have two aspects of our objectives.
 
 ![제목 없음-2022-11-03-2052](https://user-images.githubusercontent.com/113986828/229123739-e002d7af-d798-432d-8072-b42ce4ad7e31.png)
 One is completing the offering and exchange part of the STO process.
-    We divided the STO process into four parts. 
-    1. oracle 
-    2. offering 
-    3. Trust 
-    4. exchange
-    We implemented 2, 4 of those 4 process. 
+We divided the STO process into four parts. 
+
+1. oracle 
+
+2. offering 
+
+3. Trust 
+
+4. exchange
+
+We implemented 2, 4 of those 4 process. 
 
 
 Two is completing the NCD course.
-    According to the first part of the NCD, the NCD course has the following goals.
-    1. **perceiving** web 3 in the context of human history
-    2. **reading** contract code in Rust and JavaScript
-    3. **writing** contracts using Rust and JavaScript
-    4. **testing** contracts using unit and simulation tests
-    5. **deploying** contracts and a sensible user interface
-    We did it all 5 things.
+According to the first part of the NCD, the NCD course has the following goals.
+
+1. **perceiving** web 3 in the context of human history
+
+2. **reading** contract code in Rust and JavaScript
+
+3. **writing** contracts using Rust and JavaScript
+
+4. **testing** contracts using unit and simulation tests
+
+5. **deploying** contracts and a sensible user interface
+
+We did it all 5 things.
 
 # Key features
 
