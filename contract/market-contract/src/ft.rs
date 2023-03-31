@@ -5,7 +5,7 @@ impl Contract {
     /// 토큰 구매
     /// 토큰 이름과 얼마나 구매할 지 입력
     #[payable]
-    pub fn buy_token(&mut self, token_id: String, trading_amounts: u64) {
+    pub fn buy_token(&mut self, token_id: TokenId, trading_amounts: u64) {
         assert_one_yocto();
 
         let token_id: String = token_id.into();
@@ -45,7 +45,7 @@ impl Contract {
     /// 토큰 판매
     /// 토큰 이름과 얼마나 판매할 지 입력
     #[payable]
-    pub fn sell_token(&mut self, token_id: AccountId, trading_amounts: u64) {
+    pub fn sell_token(&mut self, token_id: TokenId, trading_amounts: u64) {
         assert_one_yocto();
 
         let token_id: String = token_id.into();
@@ -53,7 +53,7 @@ impl Contract {
         let price_per_ft: Balance = self.ft_infos.get(&token_id).unwrap().into();
 
         let seller_id = env::predecessor_account_id();
-        let deposit = env::attached_deposit();
+        // let deposit = env::attached_deposit();
         assert!(self.whitelist.contains(&seller_id), "Customers must enroll in the whitelist");
 
         let trading_amounts: u128 = trading_amounts.into();

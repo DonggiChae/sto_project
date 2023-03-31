@@ -71,7 +71,7 @@ pub struct Contract {
     pub storage_deposits: LookupMap<AccountId, Balance>,
 
     //keep track of how many FTs each account has deposited in order to purchase NFTs with
-    pub ft_deposits: UnorderedMap<String, UnorderedMap<AccountId, Balance>>,
+    pub ft_deposits: UnorderedMap<TokenId, UnorderedMap<AccountId, Balance>>,
 
     // Whitelist for transactions
     pub whitelist: UnorderedSet<AccountId>,
@@ -216,7 +216,7 @@ impl Contract {
     //     U128(
     //         self.ft_deposits
     //             .get(&token_id)
-    //             .unwrap()
+    //             .expect("No such token")
     //             .get(&account_id)
     //             .unwrap_or(0),
     //     )
@@ -237,12 +237,42 @@ mod tests {
 
     const NEAR: u128 = 1000000000000000000000000;
     const centiNEAR: u128 = 10000000000000000000000;
-    
-    fn set_context(predecessor: &str, amount: Balance, signer: &str) {
+
+    fn set_context(predecessor: &str, amount: Balance) {
+        let mut builder = VMContextBuilder::new();
+        builder.predecessor_account_id(predecessor.parse().unwrap());
+        builder.attached_deposit(amount);
+
+        testing_env!(builder.build());
+    }
+
+    fn set_context_id(predecessor: AccountId, amount: Balance) {
+        let mut builder = VMContextBuilder::new();
+        builder.predecessor_account_id(predecessor);
+        builder.attached_deposit(amount);
+
+        testing_env!(builder.build());
+    }
+
+    fn set_context_n_sign(predecessor: &str, amount: Balance, signer: &str) {
         let mut builder = VMContextBuilder::new();
         builder.predecessor_account_id(predecessor.parse().unwrap());
         builder.attached_deposit(amount);
         builder.signer_account_id(signer.parse().unwrap());
+
+        testing_env!(builder.build());
+    }
+
+    fn set_predecessor(predecessor: &str) {
+        let mut builder = VMContextBuilder::new();
+        builder.predecessor_account_id(predecessor.parse().unwrap());
+
+        testing_env!(builder.build());
+    }
+
+    fn set_deposit(amount: Balance) {
+        let mut builder = VMContextBuilder::new();
+        builder.attached_deposit(amount);
 
         testing_env!(builder.build());
     }
@@ -253,7 +283,7 @@ mod tests {
         let mut contract = Contract::new("contract_account".parse().unwrap());
 
         // set context
-        set_context("nft_contract_id", 10 * NEAR, "owner_id");
+        set_context_n_sign("nft_contract_id", 10 * NEAR, "owner_id");
 
         let owner: AccountId = "owner_id".parse().unwrap();
 
@@ -261,13 +291,13 @@ mod tests {
 
         // call nft_on_approve()
         // arguments: {
-        // &mut self,
-        // token_id: TokenId,
-        // owner_id: AccountId,
-        // approval_id: u64,
-        // msg: String,
-        // ft_amounts: String,
-        // ft_price: String,
+            // &mut self,
+            // token_id: TokenId,
+            // owner_id: AccountId,
+            // approval_id: u64,
+            // msg: String,
+            // ft_amounts: String,
+            // ft_price: String,
         // }
         contract.nft_on_approve(
             "token_id".to_string(),
@@ -284,6 +314,87 @@ mod tests {
         // println!("{:#?}", contract.get_sales_by_owner_id(owner.clone(), None, Some(1)));
 
         assert_eq!(contract.get_supply_by_nft_contract_id("nft_contract_id".parse().unwrap()), U64(1));
+    }
 
+    #[test]
+    fn check_ft_transactions() {
+        // initialize contract
+        let mut contract = Contract::new("contract_account".parse().unwrap());
+
+        // update ft information
+        // a has 10 * token1, whose price is 1 NEAR per token
+        // b has 100 * token2, whose price is 0.1 NEAR per token
+        let token1: TokenId = "token1".to_string();
+        let token2: TokenId = "token2".to_string();
+
+        let a: AccountId = "account_a".parse().unwrap();    // length restriction for AccountId
+        let b: AccountId = "account_b".parse().unwrap();
+
+        contract.ft_infos.insert(&token1, &(1 * NEAR));
+        contract.ft_infos.insert(&token2, &(10 * centiNEAR));
+
+        assert_eq!(contract.price_per_ft(token1.clone()), U128(1 * NEAR));
+        assert_eq!(contract.price_per_ft(token2.clone()), U128(10 * centiNEAR));
+
+        let mut map_token1: UnorderedMap<AccountId, Balance> = UnorderedMap::new(b'a');
+        map_token1.insert(&a, &(10 * NEAR));
+        contract.ft_deposits.insert(&token1, &map_token1);
+
+        let mut map_token2: UnorderedMap<AccountId, Balance> = UnorderedMap::new(b'a');
+        map_token1.insert(&b, &(10 * NEAR));
+        contract.ft_deposits.insert(&token2, &map_token2);
+        
+        // assert_eq!(contract.ft_balance_of(token1.clone(), a.clone()), U128(10 * NEAR));
+        // assert_eq!(contract.ft_balance_of(token2.clone(), b.clone()), U128(10 * NEAR));
+        // assert_eq!(contract.ft_balance_of(token1.clone(), b.clone()), U128(0));
+        
+        // register on whitelist; require 1 yoctoNEAR
+        set_deposit(1);
+        contract.make_it_white(a.clone());
+        set_deposit(1);
+        contract.make_it_white(b.clone());
+
+        // check the update for whitelist
+        assert!(contract.is_white(a.clone()));
+        assert!(contract.is_white(b.clone()));
+
+        // transactions
+        // set_context("account_a", 10 * NEAR);
+        // contract.buy_token(token1.clone(), 5);
+        // refund is not working here...
+        // contract.buy_token(token2.clone(), 10);
+        // set_deposit(1);
+        // contract.sell_token(token1.clone(), 15);
+
+        // set_context_id(b.clone(), 5);
+        // contract.sell_token(token2.clone(), 10);
+        // contract.buy_token(token1.clone(), 5);
+    }
+
+    #[test]
+    #[should_panic]
+    /// should disapprove transaction of non-white
+    fn racism() {
+        // initialize contract
+        let mut contract = Contract::new("contract_account".parse().unwrap());
+
+        // setting for tests
+        let token = "Token".to_string();
+        contract.ft_infos.insert(&token, &(1 * NEAR));
+        set_context("stranger", 10);
+
+        // test1: stranger tries to buy token
+        // comment out next line for test2
+        contract.buy_token(token.clone(), 5);
+                                                                
+        // additional setting for test2
+        let someone: AccountId = "tanned".parse().unwrap();
+        let mut map_token: UnorderedMap<AccountId, Balance> = UnorderedMap::new(b'a');
+        map_token.insert(&someone, &(10 * NEAR));
+        contract.ft_deposits.insert(&token, &map_token);
+        set_predecessor("tanned");
+        
+        // test2: got tanned and tries to sell token
+        contract.sell_token(token.clone(), 5);
     }
 }
