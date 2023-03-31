@@ -25,15 +25,15 @@ We implemented 2, 4 of those 4 process.
 Two is completing the NCD course.
 According to the first part of the NCD, the NCD course has the following goals.
 
-1. **perceiving** web 3 in the context of human history
+### 1. **perceiving** web 3 in the context of human history
 
-2. **reading** contract code in Rust and JavaScript
+### 2. **reading** contract code in Rust and JavaScript
 
-3. **writing** contracts using Rust and JavaScript
+### 3. **writing** contracts using Rust and JavaScript
 
-4. **testing** contracts using unit and simulation tests
+### 4. **testing** contracts using unit and simulation tests
 
-5. **deploying** contracts and a sensible user interface
+### 5. **deploying** contracts and a sensible user interface
 
 We did it all 5 things.
 
