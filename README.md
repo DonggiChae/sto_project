@@ -91,6 +91,12 @@ Unit test to confirm NFT registration on the market.
 
 # 5. **deploying** contracts and a sensible user interface
 
+## deploying contract 
+
+- https://sto-project.vercel.app/
+
+## a sensible user interface 
+
 ![image](https://user-images.githubusercontent.com/69336797/229145489-0f6ef515-f212-4f6a-9197-2ea7804b41f0.png)
 
 
