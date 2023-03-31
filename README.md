@@ -3,7 +3,7 @@
 ![image](https://user-images.githubusercontent.com/69336797/229003603-77b5cb4f-a3ee-470f-bdbe-190e30abeeeb.png)
 This project is for the NCD program.
 
-# STO Project Goal
+# 1. **perceiving** web 3 in the context of human history
 
 We have two aspects of our objectives.
 
@@ -25,19 +25,29 @@ We implemented 2, 4 of those 4 process.
 Two is completing the NCD course.
 According to the first part of the NCD, the NCD course has the following goals.
 
-### 1. **perceiving** web 3 in the context of human history
+ 1. **perceiving** web 3 in the context of human history
 
-### 2. **reading** contract code in Rust and JavaScript
+ 2. **reading** contract code in Rust and JavaScript
 
-### 3. **writing** contracts using Rust and JavaScript
+ 3. **writing** contracts using Rust and JavaScript
 
-### 4. **testing** contracts using unit and simulation tests
+ 4. **testing** contracts using unit and simulation tests
 
-### 5. **deploying** contracts and a sensible user interface
+ 5. **deploying** contracts and a sensible user interface
 
 We did it all 5 things.
 
-# Key features
+
+
+#  2. **reading** contract code in Rust and JavaScript
+
+- https://github.com/near-examples/ft-tutorial/tree/main/market-contract
+
+- https://github.com/near-examples/nft-tutorial/tree/8.marketplace/market-contract
+
+- https://docs.near.org/tutorials/nfts/marketplace
+
+# 3. **writing** contracts using Rust and JavaScript
 
 ## NFT Contract
 - fn nft_mint => Register assets to NFT and input information.
@@ -61,7 +71,7 @@ We did it all 5 things.
 
 <img width="734" alt="image" src="https://user-images.githubusercontent.com/69336797/229029409-d5166e95-ab0f-469c-8be1-399ef2581697.png">
 
-# Unit Test
+# 4. **testing** contracts using unit and simulation tests
 
 Unit test to confirm NFT registration on the market.
 
@@ -76,6 +86,9 @@ Unit test to confirm NFT registration on the market.
 2. mint NFT to register a asset
 3. approve NFT to market
 4. now, you can buy asset tokens and sell asset tokens
+
+# 5. **deploying** contracts and a sensible user interface
+
 
 # Next Step
 
@@ -97,13 +110,7 @@ Unit test to confirm NFT registration on the market.
 
 
 
-# The reference documents
 
-- https://github.com/near-examples/ft-tutorial/tree/main/market-contract
-
-- https://github.com/near-examples/nft-tutorial/tree/8.marketplace/market-contract
-
-- https://docs.near.org/tutorials/nfts/marketplace
 
 
 
