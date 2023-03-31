@@ -4,6 +4,16 @@
 ![image](https://user-images.githubusercontent.com/69336797/229003603-77b5cb4f-a3ee-470f-bdbe-190e30abeeeb.png)
 This project is for the NCD program.
 
+### How to use
+
+1. contract build & deploy
+    - nft contract deploy && fn new_default_meta call
+    - market contract deploy && fn new call
+2. mint NFT to register a asset
+3. approve NFT to market
+4. now, you can buy asset tokens and sell asset tokens
+
+
 # 0. Near Certified Developer Course Goals
 
  1. **perceiving** web 3 in the context of human history
@@ -81,15 +91,9 @@ Unit test to confirm NFT registration on the market.
 
 # 5. **deploying** contracts and a sensible user interface
 
+![image](https://user-images.githubusercontent.com/69336797/229145489-0f6ef515-f212-4f6a-9197-2ea7804b41f0.png)
 
-# How to use
 
-1. contract build & deploy
-    - nft contract deploy && fn new_default_meta call
-    - market contract deploy && fn new call
-2. mint NFT to register a asset
-3. approve NFT to market
-4. now, you can buy asset tokens and sell asset tokens
 
 # Next Step
 
