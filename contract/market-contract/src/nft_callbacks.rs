@@ -1,29 +1,29 @@
 use crate::*;
-// use crate::ft_lib;
 
 /// approval callbacks from NFT Contracts
 
 //struct for keeping track of the sale conditions for a Sale
-#[derive(Serialize, Deserialize)]
-#[serde(crate = "near_sdk::serde")]
-pub struct SaleArgs {
-    pub sale_conditions: SalePriceInFTs,
-}
+// #[derive(Serialize, Deserialize)]
+// #[serde(crate = "near_sdk::serde")]
+// pub struct SaleArgs {
+//     pub sale_conditions: SalePriceInYoctoNear,
+// }
 
 /*
     trait that will be used as the callback from the NFT contract. When nft_approve is
     called, it will fire a cross contract call to this marketplace and this is the function
     that is invoked.
 */
-trait NonFungibleTokenApprovalsReceiver {
+pub(crate) trait NonFungibleTokenApprovalsReceiver {
     fn nft_on_approve(
         &mut self,
         token_id: TokenId,
         owner_id: AccountId,
         approval_id: u64,
         msg: String,
-        ft_amounts: u64,
-        ft_price: u64,
+        // sale_conditions: String,
+        ft_amounts: String,
+        ft_price: String,
     );
 }
 
@@ -31,15 +31,16 @@ trait NonFungibleTokenApprovalsReceiver {
 #[near_bindgen]
 impl NonFungibleTokenApprovalsReceiver for Contract {
     /// where we add the sale because we know nft owner can only call nft_approve
-    /// TODO 처음 등록할때 희망가 작성
+
     fn nft_on_approve(
         &mut self,
         token_id: TokenId,
         owner_id: AccountId,
         approval_id: u64,
         msg: String,
-        ft_amounts: u64,
-        ft_price: u64,
+        // sale_conditions: String,
+        ft_amounts: String,
+        ft_price: String,
     ) {
         // get the contract ID which is the predecessor
         let nft_contract_id = env::predecessor_account_id();
@@ -75,10 +76,16 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         );
 
         //if all these checks pass we can create the sale conditions object.
-        let SaleArgs { sale_conditions } =
-            //the sale conditions come from the msg field. The market assumes that the user passed
-            //in a proper msg. If they didn't, it panics. 
-            near_sdk::serde_json::from_str(&msg).expect("Not valid SaleArgs");
+        // // let SaleArgs { sale_conditions } =
+        // //     //the sale conditions come from the msg field. The market assumes that the user passed
+        // //     //in a proper msg. If they didn't, it panics.
+        // //     near_sdk::serde_json::from_str(&msg).expect("Not valid SaleArgs");
+
+        // let SaleArgs { sale_conditions } = near_sdk::serde_json::from_str(&sale_conditions).expect("Not valid SaleArgs");
+
+        let sale_conditions = U128(msg.parse::<u128>().expect("Invalid Digits"));
+        let ft_amounts = U128(ft_amounts.parse::<u128>().unwrap());
+        let ft_price = U128(ft_price.parse::<u128>().unwrap());
 
         //create the unique sale ID which is the contract + DELIMITER + token ID
         let contract_and_token_id = format!("{}{}{}", nft_contract_id, DELIMETER, token_id);
@@ -92,7 +99,8 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
                 nft_contract_id: nft_contract_id.to_string(), //NFT contract the token was minted on
                 token_id: token_id.clone(), //the actual token ID
                 sale_conditions, //the sale conditions
-                ft_token_amounts: ft_amounts,
+                ft_amounts,  //the amount of FTs that are being sold
+                ft_price,    //the price of the FTs
             },
         );
 

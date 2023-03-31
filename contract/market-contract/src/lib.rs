@@ -4,29 +4,26 @@ use near_sdk::json_types::{U128, U64};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{
     assert_one_yocto, env, ext_contract, near_bindgen, AccountId, Balance, BorshStorageKey,
-    CryptoHash, Gas, PanicOnDefault, Promise, StorageUsage
+    CryptoHash, Gas, PanicOnDefault, Promise,
 };
 use std::collections::HashMap;
 
 use crate::external::*;
 use crate::ft::*;
 use crate::internal::*;
+use crate::nft_callbacks::*;
 use crate::sale::*;
 use near_sdk::env::STORAGE_PRICE_PER_BYTE;
 
 mod external;
+mod ft;
 mod internal;
-// mod ft_balances;
 mod nft_callbacks;
 mod sale;
 mod sale_views;
-// mod ft_lib;
-mod ft;
-
 
 //GAS constants to attach to calls
 const GAS_FOR_RESOLVE_PURCHASE: Gas = Gas(115_000_000_000_000);
-const GAS_FOR_RESOLVE_REFUND: Gas = Gas(30_000_000_000_000);
 const GAS_FOR_NFT_TRANSFER: Gas = Gas(15_000_000_000_000);
 
 //the minimum storage to have a sale on the contract.
@@ -36,7 +33,7 @@ const STORAGE_PER_SALE: u128 = 1000 * STORAGE_PRICE_PER_BYTE;
 static DELIMETER: &str = ".";
 
 //Creating custom types to use within the contract. This makes things more readable.
-pub type SalePriceInFTs = U128;
+pub type SalePriceInYoctoNear = U128;
 pub type TokenId = String;
 pub type FungibleTokenId = AccountId;
 pub type ContractAndTokenId = String;
@@ -76,17 +73,8 @@ pub struct Contract {
     //keep track of how many FTs each account has deposited in order to purchase NFTs with
     pub ft_deposits: UnorderedMap<String, UnorderedMap<AccountId, Balance>>,
 
-    // Keep track of each account's balances
-    // pub accounts: LookupMap<AccountId, Balance>,
-
-    // Total supply of all tokens.
-    // pub total_supply: Balance,
-
-    // The bytes for the largest possible account ID that can be registered on the contract
-    // pub bytes_for_longest_account_id: StorageUsage,
-
-    // Metadata for the contract itself
-    // pub metadata: LazyOption<FungibleTokenMetadata>,
+    // Whitelist for transactions
+    pub whitelist: UnorderedSet<AccountId>,
 }
 
 /// Helper structure to for keys of the persistent collections.
@@ -101,9 +89,10 @@ pub enum StorageKey {
     ByNFTTokenTypeInner { token_type_hash: CryptoHash },
     FTTokenIds,
     StorageDeposits,
-    FTDeposits,
     Accounts,
     Metadata,
+    FTDeposits,
+    Whitelist,
 }
 
 #[near_bindgen]
@@ -114,7 +103,6 @@ impl Contract {
         that's passed in
     */
     #[init]
-    // pub fn new(owner_id: AccountId, ft_id: AccountId) -> Self {
     pub fn new(owner_id: AccountId) -> Self {
         let this = Self {
             //set the owner_id field equal to the passed in owner_id.
@@ -129,6 +117,7 @@ impl Contract {
             by_nft_contract_id: LookupMap::new(StorageKey::ByNFTContractId),
             storage_deposits: LookupMap::new(StorageKey::StorageDeposits),
             ft_deposits: UnorderedMap::new(StorageKey::FTDeposits),
+            whitelist: UnorderedSet::new(StorageKey::Whitelist),
         };
 
         //return the Contract object
@@ -200,6 +189,12 @@ impl Contract {
         }
     }
 
+    // 화이트리스트에 추가
+    pub fn make_it_white(&mut self, account_id: AccountId) {
+        assert_one_yocto();
+        self.whitelist.insert(&account_id);
+    }
+
     /// views
     //return the minimum storage for 1 sale
     pub fn storage_minimum_balance(&self) -> U128 {
@@ -217,66 +212,78 @@ impl Contract {
     }
 
     // 가지고 있는 토큰 반환
-    pub fn ft_balance_of(&self, token_id: String, account_id: AccountId) -> U128 {
-        U128(
-            self.ft_deposits
-                .get(&token_id)
-                .unwrap()
-                .get(&account_id)
-                .unwrap_or(0),
-        )
+    // pub fn ft_balance_of(&self, token_id: String, account_id: AccountId) -> U128 {
+    //     U128(
+    //         self.ft_deposits
+    //             .get(&token_id)
+    //             .unwrap()
+    //             .get(&account_id)
+    //             .unwrap_or(0),
+    //     )
+    // }
+
+    // 화이트리스트에 포함 여부 확인
+    pub fn is_white(&self, account_id: AccountId) -> bool {
+        self.whitelist.contains(&account_id)
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-//     use near_sdk::testing_env;
-//     use near_sdk::test_utils::VMContextBuilder;
+#[cfg(test)]
+mod tests {
+    use crate::*;
+    use near_sdk::test_utils::VMContextBuilder;
+    use near_sdk::testing_env;
+    use near_sdk::Balance;
 
-//     const NEAR: u128 = 1_000_000_000_000_000_000_000_000;
+    const NEAR: u128 = 1000000000000000000000000;
+    const centiNEAR: u128 = 10000000000000000000000;
+    
+    fn set_context(predecessor: &str, amount: Balance, signer: &str) {
+        let mut builder = VMContextBuilder::new();
+        builder.predecessor_account_id(predecessor.parse().unwrap());
+        builder.attached_deposit(amount);
+        builder.signer_account_id(signer.parse().unwrap());
 
-//     #[test]
-//     fn ft_tx() {
-//         let owner_id: AccountId = "owner".parse().unwrap();
-//         let token_id: AccountId = "tk1".parse().unwrap();
-//         let price: Balance = 1_000_000_000_000_000_000_000;
+        testing_env!(builder.build());
+    }
 
-//         let mut contract = Contract::new(owner_id, token_id);
+    #[test]
+    fn check_nft_on_approve() {
+        // initialize Contract
+        let mut contract = Contract::new("contract_account".parse().unwrap());
 
-//         // check buy
-//         set_context("buyer_a", 2 * NEAR);
-//         contract.buy_token(token_id, 100 * price);
-//         let ft_balance = contract.ft_balance_of("buyer_a".parse().unwrap());
+        // set context
+        set_context("nft_contract_id", 10 * NEAR, "owner_id");
 
-//         assert_eq!(ft_balance.0, 100 * price);
+        let owner: AccountId = "owner_id".parse().unwrap();
 
-//         set_context("buyer_b", 1 * NEAR);
-//         contract.buy_token(token_id, 300 * price);
-//         let ft_balance = contract.ft_balance_of("buyer_b".parse().unwrap());
+        contract.storage_deposit(Some(owner.clone()));
 
-//         assert_eq!(ft_balance.0, 300 * price);
+        // call nft_on_approve()
+        // arguments: {
+        // &mut self,
+        // token_id: TokenId,
+        // owner_id: AccountId,
+        // approval_id: u64,
+        // msg: String,
+        // ft_amounts: String,
+        // ft_price: String,
+        // }
+        contract.nft_on_approve(
+            "token_id".to_string(),
+            owner.clone(),
+            0u64,
+            NEAR.to_string(),
+            10u64.to_string(),
+            (10*centiNEAR).to_string(),
+        );
 
-//         assert_panic!(contract.buy_token(token_id, 1 * NEAR));
+        assert_eq!(contract.get_supply_sales(), U64(1));
+        assert_eq!(contract.get_supply_by_owner_id(owner.clone()), U64(1));
+        assert_eq!(contract.get_supply_by_owner_id("stranger".parse().unwrap()), U64(0));
+        // println!("{:#?}", contract.get_sales_by_owner_id(owner.clone(), None, Some(1)));
 
-//         // check sell
-//         set_context("buyer_a", 50 * price);
-//         contract.sell_token(token_id, 50 * price);
-//         let ft_balance = contract.ft_balance_of("buyer_a".parse().unwrap());
+        assert_eq!(contract.get_supply_by_nft_contract_id("nft_contract_id".parse().unwrap()), U64(1));
 
-//         assert_eq!(ft_balance.0, 50 * price);
-//         let amout = env::attached_deposit();
-//         assert_eq!(amount, 100 * price);
-
-//         assert_panic!(contract.sell_token(token_id, 100 * price));
-//     }
-
-//     // Auxiliar fn: create a mock context
-//     fn set_context(predecessor: &str, amount: Balance) {
-//         let mut builder = VMContextBuilder::new();
-//         builder.predecessor_account_id(predecessor.parse().unwrap());
-//         builder.attached_deposit(amount);
-
-//         testing_env!(builder.build());
-//     }
-// }
+    }
+}

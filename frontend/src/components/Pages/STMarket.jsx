@@ -1,92 +1,205 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import dotenv from "dotenv";
+import { Route, Routes, Link, useParams } from "react-router-dom";
+import STBuy from "./STBuy";
+
+dotenv.config();
+const NFT_MARKET_CONTRACT_NAME = process.env.NFT_MARKET_CONTRACT_NAME;
 
 const Container = styled.div`
+  margin-top: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 100px;
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 100px;
+const ListingsTable = styled.table`
+  margin-top: 50px;
+  border-collapse: collapse;
+  width: 80%;
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+  tbody {
+    color: #ffffff;
+  }
+`;
+
+const Button = styled.button`
+  background-color: lightblue;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
 `;
 
 export default function STMarket({ wallet }) {
-  const handleGetSale = () =>
+  const handleGetSale = () => {
     wallet.viewMethod({
-      contractId: MARKET_CONTRACT_ID,
+      contractId: NFT_MARKET_CONTRACT_NAME,
       method: "get_sale",
       args: {
-        nft_contract_id: NFT_CONTRACT_NAME,
-        token_id: "1",
+        nft_contract_1d,
+        token_id,
       },
     });
-    
-  const handleAddSale = () => {
-    wallet.callMethod({
-      contractId: MARKET_CONTRACT_ID,
+  };
+
+  const handleAddSale = async () => {
+    await wallet.callMethod({
+      contractId: NFT_MARKET_CONTRACT_NAME,
       method: "add_sale",
       args: {
-        nft_contract_id: NFT_CONTRACT_NAME,
-        token_id: "1",
-        price: "100000000000000000000000",
+        nft_contract_id,
+        token_id,
+        price,
       },
-      gas: "100000000000000",
-      attachedDeposit: "1000000000000000000000",
+      deposit: "1000000000000000000000",
     });
-  }
+  };
 
-  const  handleDeleteSale = () => {
-    wallet.callMethod({
-      contractId: MARKET_CONTRACT_ID,
+  const handleDeleteSale = async () => {
+    await wallet.callMethod({
+      contractId: NFT_MARKET_CONTRACT_NAME,
       method: "delete_sale",
       args: {
-        nft_contract_id: NFT_CONTRACT_NAME,
-        token_id: "1",
+        nft_contract_id,
+        token_id,
       },
-      gas: "100000000000000",
-      attachedDeposit: "1000000000000000000000",
+      deposit: "1000000000000000000000",
     });
+  };
 
-
-  const handleOffer = () => {
-    wallet.callMethod({
-      contractId: MARKET_CONTRACT_ID,
+  const handleOffer = async () => {
+    await wallet.callMethod({
+      contractId: NFT_MARKET_CONTRACT_NAME,
       method: "offer",
       args: {
-        nft_contract_id: NFT_CONTRACT_NAME,
-        token_id: "1",
-        ft_amount: "100000000000000000000000",
-        amount: "100000000000000000000000",
+        nft_contract_id,
+        token_id,
+        ft_amount,
+        amount,
       },
-      gas: "100000000000000",
-      attachedDeposit: "1000000000000000000000",
+      deposit: "1000000000000000000000",
     });
-  }
+  };
 
-
-  const handleAcceptOffer = () => {
-    wallet.callMethod({
-      contractId: MARKET_CONTRACT_ID,
-      method: "accept_offer",
+  const handleGetAccountSales = () => {
+    wallet.viewMethod({
+      contractId: NFT_MARKET_CONTRACT_NAME,
+      method: "get_account_sales",
       args: {
-        nft_contract_id: NFT_CONTRACT_NAME,
-        token_id: "1",
-        offer_id: "1",
+        account_id,
+        from_index,
+        limit,
       },
-      gas: "100000000000000",
-      attachedDeposit: "1000000000000000000000",
-
     });
-  }
+  };
 
-  return <Container>STMarket</Container>;
+  const handleGetSupplySales = () => {
+    wallet.viewMethod({
+      contractId: NFT_MARKET_CONTRACT_NAME,
+      method: "get_supply_sales",
+      args: {},
+    });
+  };
+
+  const [listings, setListings] = useState([]);
+
+  useEffect(() => {
+    const getSales = async () => {
+      const salesCount = await handleGetSupplySales();
+      console.log(salesCount);
+      const sales = [];
+
+      for (let i = 0; i < salesCount; i++) {
+        const sale = await handleGetSale(i);
+        sales.push(sale);
+      }
+      console.log(sales);
+      setListings(sales);
+    };
+    getSales();
+  }, []);
+
+  const { index } = useParams();
+  // const index = 1;
+  const handleClick = (index) => {
+    <Link to={`/STMarket/buy/${index}`} key={index}></Link>;
+    console.log("click");
+  };
+
+  return (
+    <Container>
+      <h1>STMarket</h1>
+      <ListingsTable>
+        <thead>
+          <tr>
+            <th>Sale ID</th>
+            <th>NFT Contract</th>
+            <th>Token ID</th>
+            <th>Owner</th>
+            <th>Sale Price</th>
+            <th>Buy</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* 실제로는 이 부분 주석을 풀어야 함 */}
+          {listings.map((sale, index) => (
+            <tr key={index}>
+              <td>{sale.sale_id}</td>
+              <td>{sale.nft_contract_id}</td>
+              <td>{sale.token_id}</td>
+              <td>{sale.owner_id}</td>
+              <td>{sale.sale_conditions}</td>
+              <td>
+                <Button onClick={() => handleClick(sale)}>Buy</Button>
+              </td>
+            </tr>
+          ))}
+          {/* ----------------------------------------- */}
+          {/* 이 아래 부분은 화면 테스트 용, 실제로는 삭제되어야 함 */}
+          {/* <tr key={index}>
+            <td>test_id</td>
+            <td>test_nft_contract_id</td>
+            <td>test_token_id</td>
+            <td>test_owner_id</td>
+            <td>test_sale_conditions</td>
+            <td>
+              <Button
+                onClick={() => {
+                  handleClick();
+                }}
+              >
+                Buy
+              </Button>
+              <Link to={`/STMarket/buy/${index}`} key={index}>
+                Buy
+              </Link>
+            </td>
+          </tr> */}
+          {/* ----------------------------------------- */}
+        </tbody>
+      </ListingsTable>
+    </Container>
+  );
 }
 
 const marketContract = {
