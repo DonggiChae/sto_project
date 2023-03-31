@@ -78,6 +78,10 @@ Unit test to confirm NFT registration on the market.
 ![image](https://user-images.githubusercontent.com/69336797/229070762-52db0258-1b53-4dca-a03a-9b983a388933.png)
 
 
+
+# 5. **deploying** contracts and a sensible user interface
+
+
 # How to use
 
 1. contract build & deploy
@@ -86,9 +90,6 @@ Unit test to confirm NFT registration on the market.
 2. mint NFT to register a asset
 3. approve NFT to market
 4. now, you can buy asset tokens and sell asset tokens
-
-# 5. **deploying** contracts and a sensible user interface
-
 
 # Next Step
 
