@@ -5,6 +5,8 @@ This project is for the NCD program.
 
 # STO Project Goal
 
+![제목 없음-2022-11-03-2052](https://user-images.githubusercontent.com/113986828/229120423-0353caa6-2882-4451-8257-2b8539f225d6.png)
+
 
 
 # Key features
