@@ -31,6 +31,13 @@ This project is for the NCD program.
 
 <img width="734" alt="image" src="https://user-images.githubusercontent.com/69336797/229029409-d5166e95-ab0f-469c-8be1-399ef2581697.png">
 
+# Unit Test
+
+Unit test to confirm NFT registration on the market.
+
+![image](https://user-images.githubusercontent.com/69336797/229070762-52db0258-1b53-4dca-a03a-9b983a388933.png)
+
+
 # How to use
 
 1. contract build & deploy
