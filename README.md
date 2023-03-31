@@ -49,8 +49,21 @@ Unit test to confirm NFT registration on the market.
 
 # Next Step
 
-1. Plan to use Oracle to allow only whitelisted accounts to trade.
-2. Plan to allow price fluctuations triggered by Oracle to make it possible to change the price of assets.
+1. use Oracle 
+
+    [Offering part]    
+    - to allow only whitelisted accounts to trade.
+    - for the part that links the real value of the real thing.
+
+    [Market part]
+    - to allow price fluctuations triggered by Oracle to make it possible to change the price of assets.
+
+2. add Trust part
+
+    - to keep the token, the result of the STO's issuance 
+    to protect the trustless. 
+    There is a question of what is the right price.
+    When the issuer and distributor have the token, the trust company will be implemented to solve the trust problem 
 
 
 
