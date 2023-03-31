@@ -31,7 +31,15 @@ This project is for the NCD program.
 
 # 1. **perceiving** web 3 in the context of human history
 
-We have two aspects of our objectives.
+Why we need an STO in the context of human history 
+
+1. Eliminate intermediaries 
+- Existing meaningless paperwork can be reduced. 
+- The unnecessary cost can be reduced.
+
+2. Tokenization
+
+- The investment opportunity of the individuals can be broadened besides the existing big investment institution**
 
 ![제목 없음-2022-11-03-2052](https://user-images.githubusercontent.com/113986828/229123739-e002d7af-d798-432d-8072-b42ce4ad7e31.png)
 One is completing the offering and exchange part of the STO process.
