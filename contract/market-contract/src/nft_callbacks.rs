@@ -20,8 +20,8 @@ pub(crate) trait NonFungibleTokenApprovalsReceiver {
         token_id: TokenId,
         owner_id: AccountId,
         approval_id: u64,
-        msg: String,
-        // sale_conditions: String,
+        // msg: String,
+        sale_conditions: String,
         ft_amounts: String,
         ft_price: String,
     );
@@ -37,8 +37,8 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
         token_id: TokenId,
         owner_id: AccountId,
         approval_id: u64,
-        msg: String,
-        // sale_conditions: String,
+        // msg: String,
+        sale_conditions: String,
         ft_amounts: String,
         ft_price: String,
     ) {
@@ -83,7 +83,7 @@ impl NonFungibleTokenApprovalsReceiver for Contract {
 
         // let SaleArgs { sale_conditions } = near_sdk::serde_json::from_str(&sale_conditions).expect("Not valid SaleArgs");
 
-        let sale_conditions = U128(msg.parse::<u128>().expect("Invalid Digits"));
+        let sale_conditions = U128(sale_conditions.parse::<u128>().expect("Invalid Digits"));
         let ft_amounts = U128(ft_amounts.parse::<u128>().unwrap());
         let ft_price = U128(ft_price.parse::<u128>().unwrap());
 
