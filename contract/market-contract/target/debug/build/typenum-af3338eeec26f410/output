@@ -1,2 +1,0 @@
-cargo:rustc-env=TYPENUM_BUILD_CONSTS=D:\Near\sto_project\contract\market-contract\target\debug\build\typenum-af3338eeec26f410\out\consts.rs
-cargo:rustc-env=TYPENUM_BUILD_OP=D:\Near\sto_project\contract\market-contract\target\debug\build\typenum-af3338eeec26f410\out\op.rs

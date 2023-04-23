@@ -1,1 +1,0 @@
-/Users/donggichae/Documents/BlockChain/Rust/Projects/sto_project/contract/tests/target/debug/examples/integration-tests: /Users/donggichae/Documents/BlockChain/Rust/Projects/sto_project/contract/tests/src/helpers.rs /Users/donggichae/Documents/BlockChain/Rust/Projects/sto_project/contract/tests/src/integration-tests.rs

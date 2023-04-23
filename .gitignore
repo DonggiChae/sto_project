@@ -18,6 +18,9 @@ node_modules
 # production
 /build
 
+#contract
+target
+
 # misc
 .DS_Store
 .env
